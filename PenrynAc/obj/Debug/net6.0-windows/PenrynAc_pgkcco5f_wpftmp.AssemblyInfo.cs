@@ -17,7 +17,6 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyProductAttribute("PenrynAc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PenrynAc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
-[assembly: System.Resources.NeutralResourcesLanguageAttribute("en-GB")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 
