@@ -4,6 +4,37 @@
              xmlns:local="clr-namespace:PenrynAc"
              Startup="Application_Startup" Exit="Application_Exit">
     <Application.Resources>
-         
+        <!--Unnamed button style will be applied by default to all buttons in this application-->
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle x:Name="theRect" Height="26" Fill="Gainsboro" Stroke="{TemplateBinding BorderBrush}" RadiusX="4" RadiusY="4"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!--Triggers dictate how button's appearance reacts to events-->
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName ="theRect" Property="Fill" Value="Silver"/>
+                                <Setter TargetName ="theRect" Property="Stroke" Value="Silver"/>
+                            </Trigger>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="theRect" Property="Fill" Value="Ivory"/>
+                            </Trigger>
+                            <Trigger Property="Button.IsEnabled" Value="False">
+                                <Setter TargetName ="theRect" Property="Opacity" Value="0.3"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Control.Margin" Value="3"/>
+            <Setter Property="Padding" Value="6,2,6,2"/>
+            <Setter Property="MinHeight" Value="26"/>
+            <!--Shouldn't be less than Rectangle height-->
+        </Style>  
     </Application.Resources>
 </Application>

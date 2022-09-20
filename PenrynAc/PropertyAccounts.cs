@@ -7,12 +7,12 @@ public class PropertyAccounts
 {
     public string PropertyAddress { get; set; }
 
-    public int
-        PropertyPurchaseCost
+    public int PropertyPurchaseCost
     {
         get;
         set;
-    } // TODO make purchase cost into an expenditure category to allow for more than one cost i.e. purchase of my share and my subsequent purchase of R's share in 2 stages (Nov 18 then March 2019)
+    } // TODO make purchase cost into an expenditure category to allow for more than one cost i.e. purchase of my share and my
+      // subsequent purchase of R's share in 2 stages (Nov 18 then March 2019)
 
     public DateTime PropertyPurchaseDate { get; set; }
     public SharingSchedule LandlordShares { get; set; }
@@ -25,7 +25,6 @@ public class PropertyAccounts
     {
         ExpenditureItems = new SortedDictionary<string, ExpenditureItem>();
         IncomeItems = new SortedDictionary<string, IncomeItem>();
-        //PropertyName = propName;
         PropertyAddress = propAddress;
         PropertyPurchaseCost = propPurchaseCost;
         PropertyPurchaseDate = propPurchaseDate;

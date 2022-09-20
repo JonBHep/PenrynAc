@@ -36,3 +36,4 @@ C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\o
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\PropertyAccountsWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\PropertyDetailsWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\PropertySharesWindow.baml
+C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\App.baml

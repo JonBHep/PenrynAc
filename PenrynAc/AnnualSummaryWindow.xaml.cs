@@ -461,7 +461,7 @@ public partial class AnnualSummaryWindow : Window
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            // TODO Neaten this output document (maybe use XPS as seen in Crucial project)
+            // TODO Neaten this output document (maybe use XPS as seen in Crux project)
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
             {
                 DefaultExt = "txt",
