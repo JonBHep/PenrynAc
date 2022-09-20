@@ -21,3 +21,7 @@ C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\o
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\ref\PenrynAc.dll
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\AnnualSummaryWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\AnnualSummaryWindow.baml
+C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\DateChooserWindow.g.cs
+C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\ExpenditureItemWindow.g.cs
+C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\DateChooserWindow.baml
+C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\ExpenditureItemWindow.baml

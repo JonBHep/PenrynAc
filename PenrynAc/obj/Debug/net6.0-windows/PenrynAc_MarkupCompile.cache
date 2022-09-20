@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\App.xaml
-21313897343
+4-53806423
 
-10-1170725510
+12-1819617506
 194-1103864946
-AnnualSummaryWindow.xaml;MainWindow.xaml;
+AnnualSummaryWindow.xaml;DateChooserWindow.xaml;ExpenditureItemWindow.xaml;MainWindow.xaml;
 
 False
 
