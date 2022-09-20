@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PenrynAc;
 
 public static class Core
 {
-    // Bitmap.ConvertToBitmapImage extension method
-        // public static System.Windows.Media.Imaging.BitmapImage ConvertToBitmapImage(this System.Drawing.Bitmap bmp)
-        // // this is useful e.g. for retrieving a bitmap from Project Properties.Resources and displaying it in
-        // // an image control which requires a BitMapImage as its ImageSource
-        // {
-        //     if (bmp is null) { throw new ArgumentNullException(paramName: nameof( bmp)); }
-        //     System.IO.MemoryStream memory = new System.IO.MemoryStream();
-        //     bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-        //     memory.Position = 0;
-        //     System.Windows.Media.Imaging.BitmapImage bmpImage = new System.Windows.Media.Imaging.BitmapImage();
-        //     bmpImage.BeginInit();
-        //     bmpImage.StreamSource = memory;
-        //     bmpImage.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-        //     bmpImage.EndInit();
-        //     return bmpImage;
-        // }
+    
+        // Uri.GetBitmapImage
+        public static BitmapImage GetBitmapImage(this Uri imageAbsolutePath, BitmapCacheOption bitmapCacheOption = BitmapCacheOption.Default)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = bitmapCacheOption;
+            image.UriSource = imageAbsolutePath;
+            image.EndInit();
+
+            return image;
+        }
 
         public static System.Windows.Media.Color ToWPFColor(this System.Drawing.Color originalColor)
         // Extension method for color

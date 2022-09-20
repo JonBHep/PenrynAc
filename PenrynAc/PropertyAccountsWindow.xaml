@@ -1,0 +1,192 @@
+﻿<Window x:Class="PenrynAc.PropertyAccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:PenrynAc"
+        mc:Ignorable="d"
+        Title="Property accounts" Height="600" Width="1000" WindowStyle="None"  AllowsTransparency="True" 
+        Background="Transparent" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Window.Resources>
+        <!--If this listviewitem style is not set then all cell contents within the listview will left-align-->
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <!--Style to allow hiding of listview columnheaders-->
+        <Style x:Key="HiddenColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <!--Data templates set the content that is bound to a column in the listview and the look and formatting of the cells-->
+        <!--One Data template per column as they contain the binding information-->
+        <DataTemplate x:Key="SummaryFirstTemplate">
+            <TextBlock TextAlignment="Left" Text="{Binding First}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummarySecondTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Second}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummaryThirdTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Third}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummaryFourthTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Fourth}" MinWidth="200"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income1Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Received}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income2Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Sum}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income3Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Description}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income4Template">
+            <TextBlock TextAlignment="Left" Text="{Binding CoversFrom}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income5Template">
+            <TextBlock TextAlignment="Left" Text="{Binding CoversTo}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income6Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Days}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income7Template">
+            <TextBlock TextAlignment="Center" Text="{Binding Furnished}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income8Template">
+            <TextBlock TextAlignment="Center" Text="{Binding FirstShare}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income9Template">
+            <TextBlock TextAlignment="Center" Text="{Binding SecondShare}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure1Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Date}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure2Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Sum}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure3Template">
+            <TextBlock TextAlignment="Left" Text="{Binding TaxYear}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure4Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Category}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure5Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Description}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure6Template">
+            <TextBlock TextAlignment="Right" Text="{Binding FirstShare}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure7Template">
+            <TextBlock TextAlignment="Right" Text="{Binding SecondShare}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="CommonDateTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Date}" Foreground="{Binding Tint}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="CommonAmountTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Amount}" Foreground="{Binding Tint}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="CommonDescriptionTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Description}" Foreground="{Binding Tint}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Border CornerRadius="6" BorderThickness="1.5" BorderBrush="DarkSlateGray" Background="Gainsboro">
+        <Grid Margin="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock x:Name="textblockTitle" Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
+                <TextBlock x:Name="textblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8">Property address</TextBlock>
+
+                <Button x:Name="btnAnnualSummary" Width="120" Click="BtnAnnualSummary_Click">Annual summary</Button>
+                <Button x:Name="btnClose" Width="80" Click="BtnClose_Click" >Close</Button>
+            </StackPanel>
+            <TabControl Grid.Row="1" >
+                <TabItem Header="Summary">
+                    <ListView Name="lvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
+                        <ListView.View>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource HiddenColumnHeaderStyle}">
+                                <GridView.Columns>
+                                    <GridViewColumn CellTemplate="{StaticResource SummaryFirstTemplate}"></GridViewColumn>
+                                    <GridViewColumn CellTemplate="{StaticResource SummarySecondTemplate}"></GridViewColumn>
+                                    <GridViewColumn CellTemplate="{StaticResource SummaryThirdTemplate}"></GridViewColumn>
+                                    <GridViewColumn CellTemplate="{StaticResource SummaryFourthTemplate}"></GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Income">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button x:Name="buttonAddInc" Width="70" Click="ButtonAddInc_Click">Add</Button>
+                            <Button x:Name="buttonEditInc" Width="70" Click="ButtonEditInc_Click">Edit</Button>
+                            <Button x:Name="buttonDeleteInc" Width="70" Click="ButtonDeleteInc_Click">Delete</Button>
+                            <CheckBox x:Name="DateLimitIncCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 0 0 0" Checked="DateLimitIncCheckBox_Checked" Unchecked="DateLimitIncCheckBox_Checked">List the last 2 years only</CheckBox>
+                        </StackPanel>
+                        <ListView Name="lvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn CellTemplate="{StaticResource Income1Template}">Received</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income2Template}">Sum</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income3Template}">Description</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income4Template}">Covers from</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income5Template}">Covers to</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income6Template}">Days</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income7Template}">Furnished</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income8Template}">JBH</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Income9Template}">RJS</GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Expenditure">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button x:Name="buttonAddExp" Width="70" Click="ButtonAddExp_Click">Add</Button>
+                            <Button x:Name="buttonEditExp" Width="70" Click="ButtonEditExp_Click">Edit</Button>
+                            <Button x:Name="buttonDeleteExp" Width="70" Click="ButtonDeleteExp_Click">Delete</Button>
+                            <CheckBox x:Name="DateLimitExpCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 0 0 0" Checked="DateLimitExpCheckBox_Checked" Unchecked="DateLimitExpCheckBox_Checked">List the last 2 years only</CheckBox>
+                        </StackPanel>
+                        <ListView Name="lvwExpenditure" Background="LavenderBlush" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure1Template}">Date</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure2Template}">Sum</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure3Template}">Tax year</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure4Template}">Category</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure5Template}">Description</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure6Template}">JBH</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource Expenditure7Template}">RJS</GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Combined">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <CheckBox x:Name="DateLimitCommonCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 6 0 6" Checked="DateLimitCommonCheckBox_Checked" Unchecked="DateLimitCommonCheckBox_Checked">List the last 2 years only</CheckBox>
+                        </StackPanel>
+                        <ListView Name="lvwCommon" Background="Ivory" Foreground="Black" FontFamily="Consolas" FontSize="13">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn CellTemplate="{StaticResource CommonDateTemplate}">Date</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource CommonAmountTemplate}">Sum</GridViewColumn>
+                                        <GridViewColumn CellTemplate="{StaticResource CommonDescriptionTemplate}">Description</GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
+</Window>

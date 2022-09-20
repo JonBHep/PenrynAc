@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PenrynAc"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Penryn" Height="412" Width="612" AllowsTransparency="True" Background="Transparent" WindowStyle="None" WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered">
+    <Border Background="#FFA0A0A0" CornerRadius="6" BorderThickness="1.5" BorderBrush="DarkSlateGray">
+        <Grid Margin="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!-- Don't know why this doesn't work 
+            It shows the image in Design view but not at runtime. Mystery!
+             <Image Name="imageIllustration" Width="200" Grid.Column="1" Source="pack://siteoforigin:,,,/Resources/John Cecil Stephenson_03.jpg" Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            -->
+            <Image Name="imageIllustration" Stretch="Uniform" Margin="8" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <Grid x:Name="grifLeft" Grid.Column="0" Width="260" Margin="0,0,0,0.5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" Background="SteelBlue" Foreground="Ivory" HorizontalAlignment="Left" Margin="8" Padding="6,5,6,5" Text="Penryn accounts" VerticalAlignment="Center" FontWeight="Bold"/>
+                
+                <Grid Name="gridPropertyList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="buttonFirstOpen" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="8" Padding="32 5" FontWeight="Medium" Click="buttonPropertyOpen_Click">Open</Button>
+                    <Button x:Name="buttonFirstEdit" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Margin="8" Padding="20 3" Click="buttonPropertyEdit_Click">Edit</Button>
+                </Grid>
+                
+                <TextBlock Name="textblockAppRev" Foreground="Ivory" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="2"><Run Text="Application revised ..."/></TextBlock>
+                <Button x:Name="buttonClose" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"  Width="80" Height="26" Click="ButtonClose_Click" FontWeight="Medium">Close</Button>
+                <!--<Button Name="buttonBackups" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"  Width="120" Height="26" Click="ButtonBackups_Click">Manage backups</Button>-->
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
