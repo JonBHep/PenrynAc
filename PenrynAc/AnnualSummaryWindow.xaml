@@ -1,0 +1,144 @@
+﻿<Window x:Class="PenrynAc.AnnualSummaryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:PenrynAc"
+        mc:Ignorable="d"
+        Title="Annual summary" Height="600" Width="1000" WindowStartupLocation="CenterScreen" AllowsTransparency="True" 
+        Background="Transparent" WindowStyle="None" Loaded="Window_Loaded" ShowInTaskbar="False" ResizeMode="NoResize">
+    <Window.Resources>
+        <!--If this listviewitem style is not set then all cell contents within the listview will left-align-->
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <!--Data templates set the content that is bound to a column in the listview and the look and formatting of the cells-->
+        <!--Style to allow hiding of listview columnhdaders-->
+        <Style x:Key="HiddenColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <!--One Data template per column as they contain the binding information-->
+        <DataTemplate x:Key="SummaryFirstTemplate">
+            <TextBlock TextAlignment="Left" Text="{Binding First}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummarySecondTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Second}" MinWidth="160"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummaryThirdTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Third}" MinWidth="160"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SummaryFourthTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Fourth}" MinWidth="160"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income1Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Received}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income2Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Sum}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income2YTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding SumInYear}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income3Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Description}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income4Template">
+            <TextBlock TextAlignment="Left" Text="{Binding CoversFrom}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income5Template">
+            <TextBlock TextAlignment="Left" Text="{Binding CoversTo}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income6Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Days}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income6YTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding DaysInYear}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Income7Template">
+            <TextBlock TextAlignment="Center" Text="{Binding Furnished}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure1Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Date}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure2Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Sum}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure3Template">
+            <TextBlock TextAlignment="Left" Text="{Binding TaxYear}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure4Template">
+            <TextBlock TextAlignment="Left" Text="{Binding Category}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Expenditure5Template">
+            <TextBlock TextAlignment="Right" Text="{Binding Description}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Border Background="Gainsboro" BorderBrush="DarkSlateGray" BorderThickness="1.5" CornerRadius="6">
+        <Grid Margin="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock x:Name="textblockTitle" Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
+                <TextBlock x:Name="textblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8"><Run Text="Property address"/></TextBlock>
+                <Button x:Name="btnClose" Width="60" Click="BtnClose_Click" Content="Close" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Margin="8"><Run Text="Year"/></TextBlock>
+                <ComboBox x:Name="cboYearType" Width="240" Margin="8" SelectionChanged="CboYearType_SelectionChanged"/>
+                <ComboBox x:Name="cboYear" Width="120" Margin="8" SelectionChanged="CboYear_SelectionChanged"/>
+                <Button x:Name="btnShow" Margin="8" Width="60" Click="BtnShow_Click" Content="Show"/>
+                <Button x:Name="btnSave" Margin="8" Width="60" Content="Save" ToolTip="Save annual summary to text document" Click="BtnSave_Click"/>
+                <TextBlock x:Name="DateConfirmationTextBlock" Foreground="SaddleBrown" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">NB There was a change in ownership proportions during this tax year</TextBlock>
+                <TextBlock x:Name="SharedOwnershipTextBlock" Foreground="MediumVioletRed" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">Shared ownership during this period</TextBlock>
+                <TextBlock x:Name="OwnershipChangeAlertTextBlock" Foreground="Red" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">NB There was a change in ownership proportions during this Period</TextBlock>
+            </StackPanel>
+            <TabControl x:Name="tabCtlTabs" Grid.Row="2" >
+                <TabItem Header="Summary">
+                    <ListView x:Name="lvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
+                        <ListView.View>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource HiddenColumnHeaderStyle}">
+                                <GridViewColumn CellTemplate="{StaticResource SummaryFirstTemplate}"/>
+                                <GridViewColumn CellTemplate="{StaticResource SummarySecondTemplate}"/>
+                                <GridViewColumn CellTemplate="{StaticResource SummaryThirdTemplate}"/>
+                                <GridViewColumn CellTemplate="{StaticResource SummaryFourthTemplate}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Income">
+                    <ListView x:Name="lvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn CellTemplate="{StaticResource Income1Template}" Header="Received"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income2Template}" Header="Sum"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income2YTemplate}" Header="Sum in year"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income3Template}" Header="Description"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income4Template}" Header="Covers from"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income5Template}" Header="Covers to"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income6Template}" Header="Days"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income6YTemplate}" Header="Days in year"/>
+                                <GridViewColumn CellTemplate="{StaticResource Income7Template}" Header="Furnished"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Expenditure">
+                    <ListView x:Name="lvwExpenditure" Background="MistyRose" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn CellTemplate="{StaticResource Expenditure1Template}" Header="Date"/>
+                                <GridViewColumn CellTemplate="{StaticResource Expenditure2Template}" Header="Sum"/>
+                                <GridViewColumn CellTemplate="{StaticResource Expenditure3Template}" Header="Tax year"/>
+                                <GridViewColumn CellTemplate="{StaticResource Expenditure4Template}" Header="Category"/>
+                                <GridViewColumn CellTemplate="{StaticResource Expenditure5Template}" Header="Description"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
+</Window>
