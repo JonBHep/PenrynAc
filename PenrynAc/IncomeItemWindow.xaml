@@ -1,0 +1,58 @@
+﻿<Window x:Class="PenrynAc.IncomeItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:PenrynAc"
+        mc:Ignorable="d"
+        
+        Title="Income item" Height="300" Width="644.494" Background="Transparent" AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="JH Aramis bleu reference.ico" ContentRendered="Window_ContentRendered" SizeToContent="Width">
+    <Border Background="Gainsboro" BorderBrush="DarkSlateGray" BorderThickness="1.5" CornerRadius="6">
+    <Grid  Margin="6 8 6 8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="6,0,0,0" Padding="20 3" Background="SteelBlue" Foreground="Ivory" HorizontalAlignment="Left">Income item</TextBlock>
+        <TextBlock Grid.Row="1" VerticalAlignment="Center">Furnished?</TextBlock>
+        <CheckBox x:Name="FurnishedCheckBox" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" Checked="ChkFurnished_Checked" Unchecked="ChkFurnished_Unchecked" >Rent for furnished property prior to 6/4/2016 attracts 10% wear and tear allowance against tax</CheckBox>
+        <TextBlock Grid.Row="2" VerticalAlignment="Center">Date received</TextBlock>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+            <local:DateEntryTextBox x:Name="dateboxReceived" VerticalAlignment="Center"></local:DateEntryTextBox>
+            <Button x:Name="btnCoverMonth" Click="BtnCoverMonth_Click" Margin="8" Width="110">Cover this month</Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <Button x:Name="buttonPaste" Width="60" ToolTip="Paste description" IsEnabled="False" Click="ButtonPaste_Click">Paste</Button>
+            <TextBlock VerticalAlignment="Center" Foreground="CadetBlue" x:Name="textblockLastDescription"></TextBlock>
+        </StackPanel>
+        <TextBlock Grid.Row="4" VerticalAlignment="Center" >Description</TextBlock>
+        <TextBox x:Name="txtDescription" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" TextChanged="DescriptionTextBox_TextChanged"></TextBox>
+        <TextBlock Grid.Row="5" VerticalAlignment="Center" >Amount</TextBlock>
+        <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
+            <TextBox x:Name="txtAmount" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" TextChanged="TxtAmount_TextChanged" ></TextBox>
+            <TextBlock x:Name="lblAmountInterpret" VerticalAlignment="Center" Margin="8">£0.00</TextBlock>
+        </StackPanel>
+        <TextBlock Grid.Row="6" VerticalAlignment="Center" >Covers from</TextBlock>
+        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+            <local:DateEntryTextBox x:Name="dateboxFrom" VerticalAlignment="Center"></local:DateEntryTextBox>
+            <TextBlock VerticalAlignment="Center" Margin="8">to</TextBlock>
+            <local:DateEntryTextBox x:Name="dateboxTo" VerticalAlignment="Center"></local:DateEntryTextBox>
+        </StackPanel>
+        <DockPanel Grid.Column ="1" Grid.Row="7" Width="Auto" HorizontalAlignment="Stretch">
+            <Button x:Name="btnOK" DockPanel.Dock="Right" VerticalAlignment="Center" Width="80" Click="OkButton_Click">OK</Button>
+            <Button x:Name="btnCancel" DockPanel.Dock="Right" VerticalAlignment="Center" Width="80" Click="BtnCancel_Click">Cancel</Button>
+            <TextBlock x:Name="lblDaysCovered" DockPanel.Dock="Right" VerticalAlignment="Center" >[days]</TextBlock>
+        </DockPanel>
+    </Grid>
+    </Border>
+</Window>
