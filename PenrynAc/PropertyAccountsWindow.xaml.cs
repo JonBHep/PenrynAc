@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace PenrynAc;
 
-public partial class PropertyAccountsWindow : Window
+public partial class PropertyAccountsWindow
 {
     private readonly DateTime _backTimeLimit = DateTime.Today.AddYears(-2);
 
@@ -26,21 +26,30 @@ public partial class PropertyAccountsWindow : Window
             RefreshCommonItems();
         }
 
-        readonly ObservableCollection<Fourply> _summaryLines = new ObservableCollection<Fourply>();
-        readonly ObservableCollection<IncomeLine> _incomeLines = new ObservableCollection<IncomeLine>();
-        readonly ObservableCollection<ExpenditureLine> _expenditureLines = new ObservableCollection<ExpenditureLine>();
-        readonly ObservableCollection<CommonLine> _commonLines = new ObservableCollection<CommonLine>();
+        private readonly ObservableCollection<Fourply> _summaryLines = new ObservableCollection<Fourply>();
+        private readonly ObservableCollection<IncomeLine> _incomeLines = new ObservableCollection<IncomeLine>();
+        private readonly ObservableCollection<ExpenditureLine> _expenditureLines = new ObservableCollection<ExpenditureLine>();
+        private readonly ObservableCollection<CommonLine> _commonLines = new ObservableCollection<CommonLine>();
 
-        class Fourply
+        private class Fourply
         {
+            public Fourply()
+            {
+                First = Second = Third = Fourth = string.Empty;
+            }
             public string First { get; set; }
             public string Second { get; set; }
             public string Third { get; set; }
             public string Fourth { get; set; }
         }
 
-        class IncomeLine
+        private class IncomeLine
         {
+            public IncomeLine()
+            {
+                Received = Sum = FirstShare = SecondShare
+                    = Description = CoversFrom = CoversTo = Days = Furnished = Key = string.Empty;
+            }
             public string Received { get; set; }
             public string Sum { get; set; }
             public string FirstShare { get; set; }
@@ -53,8 +62,12 @@ public partial class PropertyAccountsWindow : Window
             public string Key { get; set; }
         }
 
-        class ExpenditureLine
+        private class ExpenditureLine
         {
+            public ExpenditureLine()
+            {
+                Date = Sum = FirstShare = SecondShare = TaxYear = Category = Description = Key = string.Empty;
+            }
             public string Date { get; set; }
             public string Sum { get; set; }
             public string FirstShare { get; set; }
@@ -65,26 +78,34 @@ public partial class PropertyAccountsWindow : Window
             public string Key { get; set; }
         }
 
-        class CommonLine : IComparable<CommonLine>
+        private class CommonLine : IComparable<CommonLine>
         {
+            public CommonLine()
+            {
+                Date = Amount = Description = string.Empty;
+                When=DateTime.MinValue;
+                Tint=Brushes.Black;
+            }
             public string Date { get; set; }
             public DateTime When { get; set; }
             public string Amount { get; set; }
             public string Description { get; set; }
             public Brush Tint { get; set; }
 
-            int IComparable<CommonLine>.CompareTo(CommonLine other)
+            int IComparable<CommonLine>.CompareTo(CommonLine? other)
             {
-                int d = this.When.CompareTo(other.When);
-                if (d == 0) { d =string.Compare( other.Amount,this.Amount, true, CultureInfo.CurrentCulture); }
+                if (other is null) return 0;
+                var d = When.CompareTo(other.When);
+                if (d == 0) { d =string.Compare( other.Amount,Amount, true, CultureInfo.CurrentCulture); }
                 return d;
+
             }
         }
 
-        void RefreshSummary()
+        private void RefreshSummary()
         {
             // blank line
-            Fourply myline = new Fourply();
+            var myline = new Fourply();
             _summaryLines.Add(myline);
 
             myline = new Fourply
@@ -116,9 +137,9 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "Purchase cost"
             };
-            int x = Core.Accounts.PropertyPurchaseCost;
-            int xf = Core.Accounts.LandlordShares.FirstShare(x, Core.Accounts.PropertyPurchaseDate);
-            int xs = Core.Accounts.LandlordShares.SecondShare(x, Core.Accounts.PropertyPurchaseDate);
+            var x = Core.Accounts.PropertyPurchaseCost;
+            var xf = Core.Accounts.LandlordShares.FirstShare(x, Core.Accounts.PropertyPurchaseDate);
+            var xs = Core.Accounts.LandlordShares.SecondShare(x, Core.Accounts.PropertyPurchaseDate);
             myline.Second = Core.MoneyString(x);
             if (xs > 0)
             {
@@ -146,12 +167,12 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "Subsequent costs"
             };
-            x = Core.Accounts.AggregateCostSubsequent(out int L1, out int L2);
+            x = Core.Accounts.AggregateCostSubsequent(out var l1, out var l2);
             myline.Second = Core.MoneyString(x);
-            if (L2 > 0)
+            if (l2 > 0)
             {
-                myline.Third = Core.MoneyString(L1);
-                myline.Fourth = Core.MoneyString(L2);
+                myline.Third = Core.MoneyString(l1);
+                myline.Fourth = Core.MoneyString(l2);
             }
             _summaryLines.Add(myline);
 
@@ -159,12 +180,12 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "TOTAL COSTS"
             };
-            x = Core.Accounts.AggregateAllTimeCostTotal(out int A1, out int A2);
+            x = Core.Accounts.AggregateAllTimeCostTotal(out var a1, out var a2);
             myline.Second = Core.MoneyString(x);
-            if (A2 > 0)
+            if (a2 > 0)
             {
-                myline.Third = Core.MoneyString(A1);
-                myline.Fourth = Core.MoneyString(A2);
+                myline.Third = Core.MoneyString(a1);
+                myline.Fourth = Core.MoneyString(a2);
             }
             _summaryLines.Add(myline);
 
@@ -176,12 +197,12 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "TOTAL INCOME"
             };
-            x = Core.Accounts.AggregateAllTimeIncomeTotal(out int B1, out int B2);
+            x = Core.Accounts.AggregateAllTimeIncomeTotal(out var b1, out var b2);
             myline.Second = Core.MoneyString(x);
-            if (B2 > 0)
+            if (b2 > 0)
             {
-                myline.Third = Core.MoneyString(B1);
-                myline.Fourth = Core.MoneyString(B2);
+                myline.Third = Core.MoneyString(b1);
+                myline.Fourth = Core.MoneyString(b2);
             }
             _summaryLines.Add(myline);
 
@@ -189,7 +210,7 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "As percentage of total cost"
             };
-            double pc = (double)Core.Accounts.AggregateAllTimeIncomeTotal(out int C1, out int C2) / Core.Accounts.AggregateAllTimeCostTotal(out int D1, out int D2);
+            var pc = (double)Core.Accounts.AggregateAllTimeIncomeTotal(out _, out _) / Core.Accounts.AggregateAllTimeCostTotal(out _ , out _);
             pc *= 100;
             myline.Second = pc.ToString("0.00", CultureInfo.CurrentCulture) + "%";
             _summaryLines.Add(myline);
@@ -198,12 +219,12 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "Average annual income"
             };
-            x = Core.Accounts.AverageAnnualIncome(out int R1, out int R2);
+            x = Core.Accounts.AverageAnnualIncome(out var r1, out var r2);
             myline.Second = Core.MoneyString(x);
-            if (R2 > 0)
+            if (r2 > 0)
             {
-                myline.Third = Core.MoneyString(R1);
-                myline.Fourth = Core.MoneyString(R2);
+                myline.Third = Core.MoneyString(r1);
+                myline.Fourth = Core.MoneyString(r2);
             }
             _summaryLines.Add(myline);
 
@@ -211,7 +232,7 @@ public partial class PropertyAccountsWindow : Window
             {
                 First = "As percentage of total cost"
             };
-            pc = (double)Core.Accounts.AverageAnnualIncome(out int E1, out int E2) / Core.Accounts.AggregateAllTimeCostTotal(out int F1, out int F2);
+            pc = (double)Core.Accounts.AverageAnnualIncome(out _, out _) / Core.Accounts.AggregateAllTimeCostTotal(out _, out _);
             pc *= 100;
             myline.Second = pc.ToString("0.00", CultureInfo.CurrentCulture) + "%";
             _summaryLines.Add(myline);
@@ -221,10 +242,9 @@ public partial class PropertyAccountsWindow : Window
         private void RefreshIncomeItems()
         {
             _incomeLines.Clear();
-            IncomeItem i;
-            foreach (string k in Core.Accounts.IncomeItems.Keys)
+            foreach (var k in Core.Accounts.IncomeItems.Keys)
             {
-                i = Core.Accounts.IncomeItems[k];
+                var i = Core.Accounts.IncomeItems[k];
                 if ((CheckBoxUnticked(DateLimitIncCheckBox)) || (i.CoversPeriodFromDate > _backTimeLimit))
                 {
                     IncomeLine l = new IncomeLine
@@ -236,10 +256,13 @@ public partial class PropertyAccountsWindow : Window
                         Description = i.Rubric,
                         FirstShare = Core.MoneyString(Core.Accounts.LandlordShares.FirstShare(i.AmountPence, i.DateReceived)),
                         SecondShare = Core.MoneyString(Core.Accounts.LandlordShares.SecondShare(i.AmountPence, i.DateReceived))
+                        ,
+                        Furnished = i.Furnished ? "Yes" : "No"
+                        ,
+                        Received = i.DateReceived.ToShortDateString()
+                        ,
+                        Sum = Core.MoneyString(i.AmountPence)
                     };
-                    if (i.Furnished) { l.Furnished = "Yes"; } else { l.Furnished = "No"; }
-                    l.Received = i.DateReceived.ToShortDateString();
-                    l.Sum = Core.MoneyString(i.AmountPence);
                     _incomeLines.Add(l);
                 }
             }
@@ -249,10 +272,9 @@ public partial class PropertyAccountsWindow : Window
         {
             _expenditureLines.Clear();
 
-            ExpenditureItem e;
             foreach (string k in Core.Accounts.ExpenditureItems.Keys)
             {
-                e = Core.Accounts.ExpenditureItems[k];
+                var e = Core.Accounts.ExpenditureItems[k];
                 if ((CheckBoxUnticked(DateLimitExpCheckBox)) || (e.PayDate > _backTimeLimit))
                 {
                     ExpenditureLine l = new ExpenditureLine
@@ -339,20 +361,20 @@ public partial class PropertyAccountsWindow : Window
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem NewIi = new IncomeItem(Spec: wdw.Ink.Specification);
-                if (NewIi.DateReceived == ii.DateReceived) // can edit existing item
+                IncomeItem newIi = new IncomeItem(Spec: wdw.Ink.Specification);
+                if (newIi.DateReceived == ii.DateReceived) // can edit existing item
                 {
-                    Core.Accounts.IncomeItems[il.Key].AmountPence = NewIi.AmountPence;
-                    Core.Accounts.IncomeItems[il.Key].CoversPeriodFromDate = NewIi.CoversPeriodFromDate;
-                    Core.Accounts.IncomeItems[il.Key].CoversPeriodToDate = NewIi.CoversPeriodToDate;
-                    Core.Accounts.IncomeItems[il.Key].Furnished = NewIi.Furnished;
-                    Core.Accounts.IncomeItems[il.Key].Rubric = NewIi.Rubric;
+                    Core.Accounts.IncomeItems[il.Key].AmountPence = newIi.AmountPence;
+                    Core.Accounts.IncomeItems[il.Key].CoversPeriodFromDate = newIi.CoversPeriodFromDate;
+                    Core.Accounts.IncomeItems[il.Key].CoversPeriodToDate = newIi.CoversPeriodToDate;
+                    Core.Accounts.IncomeItems[il.Key].Furnished = newIi.Furnished;
+                    Core.Accounts.IncomeItems[il.Key].Rubric = newIi.Rubric;
                 }
                 else
                 // must replace with new item as date had changed
                 {
                     Core.Accounts.IncomeItems.Remove(il.Key);
-                    Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(NewIi.DateReceived), value: NewIi);
+                    Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 }
                 RefreshIncomeItems();
                 RefreshCommonItems();
@@ -372,19 +394,19 @@ public partial class PropertyAccountsWindow : Window
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem NewEi = new ExpenditureItem(Spec: wdw.Z.Specification);
-                if (NewEi.PayDate == ei.PayDate) //  can edit existing item
+                ExpenditureItem newEi = new ExpenditureItem(Spec: wdw.Z.Specification);
+                if (newEi.PayDate == ei.PayDate) //  can edit existing item
                 {
-                    Core.Accounts.ExpenditureItems[el.Key].AllocatedTaxYear = NewEi.AllocatedTaxYear;
-                    Core.Accounts.ExpenditureItems[el.Key].AmountPence = NewEi.AmountPence;
-                    Core.Accounts.ExpenditureItems[el.Key].Category = NewEi.Category;
-                    Core.Accounts.ExpenditureItems[el.Key].Rubric = NewEi.Rubric;
+                    Core.Accounts.ExpenditureItems[el.Key].AllocatedTaxYear = newEi.AllocatedTaxYear;
+                    Core.Accounts.ExpenditureItems[el.Key].AmountPence = newEi.AmountPence;
+                    Core.Accounts.ExpenditureItems[el.Key].Category = newEi.Category;
+                    Core.Accounts.ExpenditureItems[el.Key].Rubric = newEi.Rubric;
                 }
                 else
                 // must replace with new item as date had changed
                 {
                     Core.Accounts.ExpenditureItems.Remove(el.Key);
-                    Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(NewEi.PayDate), value: NewEi);
+                    Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 }
                 RefreshExpenditureItems();
                 RefreshCommonItems();
@@ -400,8 +422,8 @@ public partial class PropertyAccountsWindow : Window
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem NewIi = new IncomeItem(Spec: wdw.Ink.Specification);
-                Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(NewIi.DateReceived), value: NewIi);
+                IncomeItem newIi = new IncomeItem(Spec: wdw.Ink.Specification);
+                Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 RefreshIncomeItems();
                 RefreshCommonItems();
             }
@@ -426,8 +448,8 @@ public partial class PropertyAccountsWindow : Window
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem NewEi = new ExpenditureItem(Spec: wdw.Z.Specification);
-                Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(NewEi.PayDate), value: NewEi);
+                ExpenditureItem newEi = new ExpenditureItem(Spec: wdw.Z.Specification);
+                Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 RefreshExpenditureItems();
                 RefreshCommonItems();
             }
@@ -469,15 +491,15 @@ public partial class PropertyAccountsWindow : Window
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            double scrX = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double scrY = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double winX = scrX * .98;
-            double winY = scrY * .94;
-            double Xm = (scrX - winX) / 2;
-            double Ym = (scrY - winY) / 4;
+            var scrX = SystemParameters.PrimaryScreenWidth;
+            var scrY = SystemParameters.PrimaryScreenHeight;
+            var winX = scrX * .98;
+            var winY = scrY * .94;
+            var xm = (scrX - winX) / 2;
+            var ym = (scrY - winY) / 4;
             Width = winX;
             Height = winY;
-            Left = Xm;
-            Top = Ym;
+            Left = xm;
+            Top = ym;
         }
 }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:PenrynAc"
         mc:Ignorable="d"
         Title="Annual summary" Height="600" Width="1000" WindowStartupLocation="CenterScreen" AllowsTransparency="True" 
         Background="Transparent" WindowStyle="None" Loaded="Window_Loaded" ShowInTaskbar="False" ResizeMode="NoResize">
@@ -81,23 +80,23 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock x:Name="textblockTitle" Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
-                <TextBlock x:Name="textblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8"><Run Text="Property address"/></TextBlock>
-                <Button x:Name="btnClose" Width="60" Click="BtnClose_Click" Content="Close" />
+                <TextBlock x:Name="TextblockTitle" Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
+                <TextBlock x:Name="TextblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8"><Run Text="Property address"/></TextBlock>
+                <Button x:Name="BtnClose" Width="60" Click="BtnClose_Click" Content="Close" />
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Margin="8"><Run Text="Year"/></TextBlock>
-                <ComboBox x:Name="cboYearType" Width="240" Margin="8" SelectionChanged="CboYearType_SelectionChanged"/>
-                <ComboBox x:Name="cboYear" Width="120" Margin="8" SelectionChanged="CboYear_SelectionChanged"/>
-                <Button x:Name="btnShow" Margin="8" Width="60" Click="BtnShow_Click" Content="Show"/>
-                <Button x:Name="btnSave" Margin="8" Width="60" Content="Save" ToolTip="Save annual summary to text document" Click="BtnSave_Click"/>
+                <ComboBox x:Name="CboYearType" Width="240" Margin="8" SelectionChanged="CboYearType_SelectionChanged"/>
+                <ComboBox x:Name="CboYear" Width="120" Margin="8" SelectionChanged="CboYear_SelectionChanged"/>
+                <Button x:Name="BtnShow" Margin="8" Width="60" Click="BtnShow_Click" Content="Show"/>
+                <Button x:Name="BtnSave" Margin="8" Width="60" Content="Save" ToolTip="Save annual summary to text document" Click="BtnSave_Click"/>
                 <TextBlock x:Name="DateConfirmationTextBlock" Foreground="SaddleBrown" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">NB There was a change in ownership proportions during this tax year</TextBlock>
                 <TextBlock x:Name="SharedOwnershipTextBlock" Foreground="MediumVioletRed" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">Shared ownership during this period</TextBlock>
                 <TextBlock x:Name="OwnershipChangeAlertTextBlock" Foreground="Red" FontFamily="Consolas" FontWeight="Medium" VerticalAlignment="Center" Margin="8 0 0 0">NB There was a change in ownership proportions during this Period</TextBlock>
             </StackPanel>
-            <TabControl x:Name="tabCtlTabs" Grid.Row="2" >
+            <TabControl x:Name="TabCtlTabs" Grid.Row="2" >
                 <TabItem Header="Summary">
-                    <ListView x:Name="lvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
+                    <ListView x:Name="LvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource HiddenColumnHeaderStyle}">
                                 <GridViewColumn CellTemplate="{StaticResource SummaryFirstTemplate}"/>
@@ -109,7 +108,7 @@
                     </ListView>
                 </TabItem>
                 <TabItem Header="Income">
-                    <ListView x:Name="lvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
+                    <ListView x:Name="LvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn CellTemplate="{StaticResource Income1Template}" Header="Received"/>
@@ -126,7 +125,7 @@
                     </ListView>
                 </TabItem>
                 <TabItem Header="Expenditure">
-                    <ListView x:Name="lvwExpenditure" Background="MistyRose" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
+                    <ListView x:Name="LvwExpenditure" Background="MistyRose" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn CellTemplate="{StaticResource Expenditure1Template}" Header="Date"/>
