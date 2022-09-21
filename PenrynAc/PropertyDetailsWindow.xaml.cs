@@ -6,51 +6,48 @@ using System.Windows.Media;
 
 namespace PenrynAc;
 
-public partial class PropertyDetailsWindow : Window
+public partial class PropertyDetailsWindow
 {
     public PropertyDetailsWindow()
         {
             InitializeComponent();
             // Assign these events after InitializeComponent rather than in XAML so as to avoid events firing 
             // and triggering Null exceptions during InitializeComponent
+            _originalSharingSchedule = _originalAddress = _address = _title = string.Empty;
+            PurchaseDateTextBlock.Tag = _purchaseDate;
             TxtProperty.TextChanged += TxtProperty_TextChanged;
             TxtAddress.TextChanged += TxtAddress_TextChanged;
             TxtPurchaseCost.TextChanged += TxtPurchaseCost_TextChanged;
-            DtpPurchaseDate.DisplayDateStart = new DateTime(year: 2000, month: 1, day: 1);
-            DtpPurchaseDate.DisplayDateEnd = DateTime.Today;
-            DtpPurchaseDate.SelectedDateChanged += DtpPurchaseDate_SelectedDateChanged;
             BtnOk.Click += BtnOK_Click;
             BtnCancel.Click += BtnCancel_Click;
         }
 
-        private string _Title;
-        private string _Address;
-        private DateTime _PurchaseDate;
-        private int _PurchaseCost;
+        private string _title;
+        private string _address;
+        private DateTime _purchaseDate;
+        private int _purchaseCost;
         private readonly SharingSchedule _shares = new SharingSchedule();
 
-        private string originalAddress;
-        private DateTime originalPurchaseDate;
-        private string originalSharingSchedule;
-        private int originalPurchaseCost;
+        private string _originalAddress;
+        private DateTime _originalPurchaseDate;
+        private string _originalSharingSchedule;
+        private int _originalPurchaseCost;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             TextblockErrorTitle.Visibility = Visibility.Hidden;
 
-            //txtProperty.Text = originalTitle = _Title = Core.Accounts.PropertyName;
-
-            TxtAddress.Text = originalAddress = _Address = PropertyAccounts.Instance.PropertyAddress;
+            TxtAddress.Text = _originalAddress = _address = PropertyAccounts.Instance.PropertyAddress;
 
             _shares.Specification = PropertyAccounts.Instance.LandlordShares.Specification;
             LblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
-            originalSharingSchedule = _shares.Specification;
+            _originalSharingSchedule = _shares.Specification;
 
-            originalPurchaseCost = _PurchaseCost = PropertyAccounts.Instance.PropertyPurchaseCost;
-            TxtPurchaseCost.Text = ((decimal)_PurchaseCost / 100).ToString(CultureInfo.CurrentCulture);
+            _originalPurchaseCost = _purchaseCost = PropertyAccounts.Instance.PropertyPurchaseCost;
+            TxtPurchaseCost.Text = ((decimal)_purchaseCost / 100).ToString(CultureInfo.CurrentCulture);
 
-            originalPurchaseDate = _PurchaseDate = PropertyAccounts.Instance.PropertyPurchaseDate;
-            DtpPurchaseDate.SelectedDate = _PurchaseDate;
+            _originalPurchaseDate = _purchaseDate = PropertyAccounts.Instance.PropertyPurchaseDate;
+            PurchaseDateTextBlock.Text = _purchaseDate.ToShortDateString();
 
             BtnOk.IsEnabled = false;
 
@@ -68,14 +65,14 @@ public partial class PropertyDetailsWindow : Window
 
         private void Enablement()
         {
-            BtnOk.IsEnabled = !(((originalAddress == TxtAddress.Text) || string.IsNullOrWhiteSpace(TxtAddress.Text))
-                && (originalPurchaseCost == _PurchaseCost)
-                && (originalPurchaseDate == DtpPurchaseDate.SelectedDate) && (originalSharingSchedule == _shares.Specification));
+            BtnOk.IsEnabled = !(((_originalAddress == TxtAddress.Text) || string.IsNullOrWhiteSpace(TxtAddress.Text))
+                && (_originalPurchaseCost == _purchaseCost)
+                && (_originalPurchaseDate ==(DateTime)PurchaseDateTextBlock.Tag) && (_originalSharingSchedule == _shares.Specification));
         }
 
         private void TxtAddress_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _Address = TxtAddress.Text;
+            _address = TxtAddress.Text;
             Enablement();
         }
 
@@ -89,34 +86,25 @@ public partial class PropertyDetailsWindow : Window
             else
             {
                 TextblockErrorTitle.Visibility = Visibility.Hidden;
-                _Title = TxtProperty.Text;
+                _title = TxtProperty.Text;
                 Enablement();
             }
         }
 
-        //public int PropertyShareSixths
-        //{ get { return _ShareSixths; } }
+       public string PropertyAddress => _address;
 
-        public string PropertyTitle
-        { get { return _Title; } }
+       public DateTime PropertyPurchaseDate => _purchaseDate;
 
-        public string PropertyAddress
-        { get { return _Address; } }
+       public int PropertyPurchaseCost => _purchaseCost;
 
-        public DateTime PropertyPurchaseDate
-        { get { return _PurchaseDate; } }
-
-        public int PropertyPurchaseCost
-        { get { return _PurchaseCost; } }
-
-        private void TxtPurchaseCost_TextChanged(object sender, TextChangedEventArgs e)
+       private void TxtPurchaseCost_TextChanged(object sender, TextChangedEventArgs e)
         {
             string qs = TxtPurchaseCost.Text.Trim();
             if (string.IsNullOrWhiteSpace(qs))
             {
                 LblPurchaseCostInterpret.Text = "Amount is missing";
                 LblPurchaseCostInterpret.Foreground = Brushes.Red;
-                _PurchaseCost = 0;
+                _purchaseCost = 0;
             }
             else
             {
@@ -127,37 +115,37 @@ public partial class PropertyDetailsWindow : Window
                     if (sAmount <= 0)
                     {
                         LblPurchaseCostInterpret.Foreground = Brushes.Red;
-                        _PurchaseCost = 0;
+                        _purchaseCost = 0;
                     }
                     else
                     {
                         LblPurchaseCostInterpret.Foreground = Brushes.Blue;
-                        _PurchaseCost = (int)sAmount * 100;
+                        _purchaseCost = (int)sAmount * 100;
                     }
                 }
                 else
                 {
                     LblPurchaseCostInterpret.Text = "Amount is not a valid number";
                     LblPurchaseCostInterpret.Foreground = Brushes.Red;
-                    _PurchaseCost = 0;
+                    _purchaseCost = 0;
                 }
                 Enablement();
             }
 
         }
 
-        private void DtpPurchaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _PurchaseDate = (DateTime)DtpPurchaseDate.SelectedDate;
-            Enablement();
-        }
+        // private void DtpPurchaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        // {
+        //     _PurchaseDate = DtpPurchaseDate.SelectedDate ?? DateTime.Today;
+        //     Enablement();
+        // }
 
         private void SharingButton_Click(object sender, RoutedEventArgs e)
         {
-            PropertySharesWindow win = new PropertySharesWindow(_Title) { Owner = this };
+            PropertySharesWindow win = new PropertySharesWindow(_title) { Owner = this };
             win.SetSchedule(_shares.Specification);
-            bool? Q = win.ShowDialog();
-            if ((Q.HasValue) && (Q.Value))
+            bool? q = win.ShowDialog();
+            if ((q.HasValue) && (q.Value))
             {
                 _shares.Specification = win.OutputScheduleSpecification;
                 LblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
@@ -165,5 +153,17 @@ public partial class PropertyDetailsWindow : Window
             }
         }
 
-        public string PropertySharingSpecification { get { return _shares.Specification; } }
+        public string PropertySharingSpecification => _shares.Specification;
+
+        private void PurchaseDateButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DateChooserWindow w = new DateChooserWindow() {Owner = this};
+            if (w.ShowDialog() == true)
+            {
+                DateTime d = w.SelectedDate;
+                PurchaseDateTextBlock.Tag = d;
+                PurchaseDateTextBlock.Text = d.ToShortDateString();
+                Enablement();
+            }
+        }
 }

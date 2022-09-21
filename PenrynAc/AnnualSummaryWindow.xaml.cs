@@ -51,6 +51,10 @@ public partial class AnnualSummaryWindow
 
     private class Fourply
     {
+        public Fourply()
+        {
+            First = Second = Third = Fourth = string.Empty;
+        }
         public string First { get; set; }
         public string Second { get; set; }
         public string Third { get; set; }

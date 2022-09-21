@@ -29,8 +29,8 @@
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Date received</TextBlock>
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
             <TextBlock x:Name="ReceivedDateTextBlock" VerticalAlignment="Center" Margin="4" MinWidth="60" FontWeight="Medium"></TextBlock>
-            <Button x:Name="ReceivedDateButton" VerticalAlignment="Center" Margin="4" MinWidth="60" Click="ReceivedDateButton_Click" ToolTip="Select date">Date</Button>
-            <Button x:Name="BtnCoverMonth" Click="BtnCoverMonth_Click" Margin="8" Width="110">Cover this month</Button>
+            <Button VerticalAlignment="Center" Margin="4" MinWidth="60" Click="ReceivedDateButton_Click" ToolTip="Select date">Date</Button>
+            <Button Click="BtnCoverMonth_Click" Margin="8" Width="110">Cover this month</Button>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
             <Button x:Name="ButtonPaste" Width="60" ToolTip="Paste description" IsEnabled="False" Click="ButtonPaste_Click">Paste</Button>

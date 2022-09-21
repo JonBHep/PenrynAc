@@ -50,16 +50,16 @@ public partial class PropertyAccountsWindow
                 Received = Sum = FirstShare = SecondShare
                     = Description = CoversFrom = CoversTo = Days = Furnished = Key = string.Empty;
             }
-            public string Received { get; set; }
+            public string Received { get; init; }
             public string Sum { get; set; }
             public string FirstShare { get; set; }
             public string SecondShare { get; set; }
-            public string Description { get; set; }
+            public string Description { get; init; }
             public string CoversFrom { get; set; }
             public string CoversTo { get; set; }
             public string Days { get; set; }
             public string Furnished { get; set; }
-            public string Key { get; set; }
+            public string Key { get; init; }
         }
 
         private class ExpenditureLine
@@ -68,14 +68,14 @@ public partial class PropertyAccountsWindow
             {
                 Date = Sum = FirstShare = SecondShare = TaxYear = Category = Description = Key = string.Empty;
             }
-            public string Date { get; set; }
+            public string Date { get; init; }
             public string Sum { get; set; }
             public string FirstShare { get; set; }
             public string SecondShare { get; set; }
             public string TaxYear { get; set; }
             public string Category { get; set; }
-            public string Description { get; set; }
-            public string Key { get; set; }
+            public string Description { get; init; }
+            public string Key { get; init; }
         }
 
         private class CommonLine : IComparable<CommonLine>
@@ -87,8 +87,8 @@ public partial class PropertyAccountsWindow
                 Tint=Brushes.Black;
             }
             public string Date { get; set; }
-            public DateTime When { get; set; }
-            public string Amount { get; set; }
+            public DateTime When { get; init; }
+            public string Amount { get; init; }
             public string Description { get; set; }
             public Brush Tint { get; set; }
 
@@ -98,7 +98,6 @@ public partial class PropertyAccountsWindow
                 var d = When.CompareTo(other.When);
                 if (d == 0) { d =string.Compare( other.Amount,Amount, true, CultureInfo.CurrentCulture); }
                 return d;
-
             }
         }
 

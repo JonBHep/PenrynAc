@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Penryn" Height="412" Width="612" AllowsTransparency="True" Background="Transparent" WindowStyle="None" WindowStartupLocation="CenterScreen" 
+        Title="Penryn" Height="412" Width="712" AllowsTransparency="True" Background="Transparent" WindowStyle="None" WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered">
     <Border Background="#FFA0A0A0" CornerRadius="6" BorderThickness="1.5" BorderBrush="DarkSlateGray">
         <Grid Margin="6">
@@ -12,15 +12,9 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <!-- Don't know why this doesn't work 
-            It shows the image in Design view but not at runtime. Mystery!
-             <Image Name="imageIllustration" Width="200" Grid.Column="1" Source="pack://siteoforigin:,,,/Resources/John Cecil Stephenson_03.jpg" Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            -->
+            
             <Image Name="ImageIllustration" Stretch="Uniform" Margin="8" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-            <Grid x:Name="GrifLeft" Grid.Column="0" Width="260" Margin="0,0,0,0.5">
+            <Grid  Grid.Column="0"  Margin="0,0,0,0.5" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -32,9 +26,11 @@
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
                 
-                <TextBlock Grid.Column="0" Grid.Row="0" Background="SteelBlue" Foreground="Ivory" HorizontalAlignment="Left" Margin="8" Padding="6,5,6,5" Text="Penryn accounts" VerticalAlignment="Center" FontWeight="Bold"/>
-                
-                <Grid Name="GridPropertyList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBlock Grid.Column="0" Grid.Row="0" Background="SteelBlue" Foreground="Ivory" HorizontalAlignment="Left" Margin="8" Padding="6,5,6,5" Text="Penryn accounts" FontSize="14" VerticalAlignment="Center" FontWeight="Bold"/>
+<Border Grid.Column="1" Grid.Row="0" BorderBrush="MidnightBlue" BorderThickness="1.5" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="8 4" CornerRadius="6" Background="SteelBlue">
+    <TextBlock Foreground="Ivory" FontWeight="Bold">.NET 6.0</TextBlock>
+</Border>                
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -44,13 +40,13 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button x:Name="ButtonFirstOpen" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="8" Padding="32 5" FontWeight="Medium" Click="buttonPropertyOpen_Click">Open</Button>
-                    <Button x:Name="ButtonFirstEdit" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Margin="8" Padding="20 3" Click="buttonPropertyEdit_Click">Edit</Button>
+                    <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="88" Height="26" Margin="8" Padding="32 5" FontWeight="Medium" Click="buttonPropertyOpen_Click">Open</Button>
+                    <Button Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Margin="8" Width="88" Height="26" Padding="20 3" Click="buttonPropertyEdit_Click">Edit</Button>
                 </Grid>
                 
                 <TextBlock Name="TextblockAppRev" Foreground="Ivory" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="2"><Run Text="Application revised ..."/></TextBlock>
-                <Button x:Name="ButtonClose" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"  Width="80" Height="26" Click="ButtonClose_Click" FontWeight="Medium">Close</Button>
-                <!--<Button Name="buttonBackups" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"  Width="120" Height="26" Click="ButtonBackups_Click">Manage backups</Button>-->
+                <Button Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"  Width="88" Height="26" Click="ButtonClose_Click" FontWeight="Medium">Close</Button>
+                
             </Grid>
         </Grid>
     </Border>
