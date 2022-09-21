@@ -353,15 +353,13 @@ public partial class PropertyAccountsWindow
             if (lvwIncome.SelectedIndex == -1) return; // no item selected
             IncomeLine il = (IncomeLine)lvwIncome.SelectedItem;
             IncomeItem ii = Core.Accounts.IncomeItems[il.Key];
-            IncomeItemWindow wdw = new IncomeItemWindow
+            IncomeItemWindow wdw = new IncomeItemWindow(new IncomeItem(spec: ii.Specification))
             {
-                Ink = new IncomeItem(spec: ii.Specification),
-                Owner = this,
-                ParamNewItem = false
+                Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem newIi = new IncomeItem(spec: wdw.Ink.Specification);
+                IncomeItem newIi = new IncomeItem(spec: wdw.IncomeItemSpec);
                 if (newIi.DateReceived == ii.DateReceived) // can edit existing item
                 {
                     Core.Accounts.IncomeItems[il.Key].AmountPence = newIi.AmountPence;
@@ -415,14 +413,15 @@ public partial class PropertyAccountsWindow
 
         private void ButtonAddInc_Click(object sender, RoutedEventArgs e)
         {
-            IncomeItemWindow wdw = new IncomeItemWindow
+            IncomeItem q=new  IncomeItem(whenReceived: DateTime.Today, description: string.Empty, penceValue: 0
+                , periodFrom: DateTime.Today, periodTo: DateTime.Today, furnishd: false);
+            IncomeItemWindow wdw = new IncomeItemWindow(q)
             {
-                ParamNewItem = true,
                 Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem newIi = new IncomeItem(spec: wdw.Ink.Specification);
+                IncomeItem newIi = new IncomeItem(spec: wdw.IncomeItemSpec);
                 Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 RefreshIncomeItems();
                 RefreshCommonItems();

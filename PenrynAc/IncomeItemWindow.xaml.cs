@@ -8,24 +8,20 @@ namespace PenrynAc;
 
 public partial class IncomeItemWindow
 {
-    public bool ParamNewItem { get; set; }
-    public IncomeItem Ink { get; set; }
-    public bool DunLoading { get; set; }
+    private IncomeItem Ink { get; set; }
+    
+    public string IncomeItemSpec => Ink.Specification;
+    private bool DunLoading { get; set; }
 
-    public IncomeItemWindow()
+    public IncomeItemWindow(IncomeItem receipt)
     {
         InitializeComponent();
+        Ink =new IncomeItem(spec: receipt.Specification);
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         LblAmountInterpret.Text = string.Empty;
-        if (ParamNewItem)
-        {
-            Ink = new IncomeItem(whenReceived: DateTime.Today, description: string.Empty, penceValue: 0
-                , periodFrom: DateTime.Today, periodTo: DateTime.Today, furnishd: false);
-        }
-
         ReceivedDateTextBlock.Tag = Ink.DateReceived;
         ReceivedDateTextBlock.Text = Ink.DateReceived.ToShortDateString();
         TxtAmount.Text = (Ink.AmountPence / (decimal) 100).ToString("0.00", CultureInfo.CurrentCulture);
@@ -41,16 +37,9 @@ public partial class IncomeItemWindow
 
     private void ShowDayCount()
     {
-        int dys = Ink.DaysCovered;
+        var dys = Ink.DaysCovered;
         LblDaysCovered.Text = $"{dys} days";
-        if (dys > 0)
-        {
-            LblDaysCovered.Foreground = Brushes.Blue;
-        }
-        else
-        {
-            LblDaysCovered.Foreground = Brushes.Red;
-        }
+        LblDaysCovered.Foreground = dys > 0 ? Brushes.Blue : Brushes.Red;
     }
 
     private void TxtAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -156,8 +145,7 @@ public partial class IncomeItemWindow
             if (FurnishedCheckBox.IsChecked.HasValue && FurnishedCheckBox.IsChecked.Value)
             {
                 JbhMessage(
-                    "The 'Covers to' date is after 6/4/2016 so the 'Furnished' checkbox should not be ticked as wear and tear allowance was abolished from that date."
-                    , MessageBoxButton.OK);
+                    "The 'Covers to' date is after 6/4/2016 so the 'Furnished' checkbox should not be ticked as wear and tear allowance was abolished from that date.");
             }
         }
 
@@ -176,39 +164,6 @@ public partial class IncomeItemWindow
         Ink.Rubric = TxtDescription.Text.Trim();
     }
 
-    // private void FromDateChanged(object sender, EventArgs e)
-    // {
-    //     if (!DunLoading) return;
-    //     if (!DateboxFrom.DateValue.HasValue)
-    //     {
-    //         return;
-    //     }
-    //
-    //     Ink.CoversPeriodFromDate = DateboxFrom.DateValue.Value;
-    //     ShowDayCount();
-    // }
-
-    // private void ToDateChanged(object sender, EventArgs e)
-    // {
-    //     if (!DunLoading) return;
-    //     if (!DateboxTo.DateValue.HasValue)
-    //     {
-    //         return;
-    //     }
-    //
-    //     Ink.CoversPeriodToDate = DateboxTo.DateValue.Value;
-    //     ShowDayCount();
-    // }
-
-    // private void ReceivedDateChanged(object sender, EventArgs e)
-    // {
-    //     if (!DunLoading) return;
-    //     if (DateboxReceived.DateValue.HasValue)
-    //     {
-    //         Ink.ExceptionallySetReceivedDate(DateboxReceived.DateValue.Value);
-    //     }
-    // }
-
     private void ReceivedDateButton_Click(object sender, RoutedEventArgs e)
     {
         DateChooserWindow w = new DateChooserWindow() {Owner = this};
@@ -224,13 +179,13 @@ public partial class IncomeItemWindow
     private void ChkFurnished_Checked(object sender, RoutedEventArgs e)
     {
         if (!DunLoading) return;
-        Ink.Furnished = (bool) FurnishedCheckBox.IsChecked;
+        Ink.Furnished = FurnishedCheckBox.IsChecked ?? false;
     }
 
     private void ChkFurnished_Unchecked(object sender, RoutedEventArgs e)
     {
         if (!DunLoading) return;
-        Ink.Furnished = (bool) FurnishedCheckBox.IsChecked;
+        Ink.Furnished =  FurnishedCheckBox.IsChecked ?? false;
     }
 
     private void BtnCancel_Click(object sender, RoutedEventArgs e)
@@ -251,12 +206,12 @@ public partial class IncomeItemWindow
             ToDateTextBlock.Tag = f;
             ToDateTextBlock.Text = f.ToShortDateString();
             Ink.CoversPeriodToDate = f;
+            ShowDayCount();
         }
     }
 
     private void Window_ContentRendered(object sender, EventArgs e)
     {
-        //DateboxReceived.Focus();
         if (string.IsNullOrWhiteSpace(Core.LastIncItemRubric))
         {
             ButtonPaste.IsEnabled = false;
