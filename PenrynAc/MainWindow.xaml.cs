@@ -154,30 +154,29 @@ namespace PenrynAc
         {
             //Button btn = (Button)sender;
             //string SelectedProperty = (string)btn.Tag;
-            Core.Accounts = new PropertyAccounts();
+            //Core.Accounts = new PropertyAccounts();
             PropertyAccountsWindow wdw = new PropertyAccountsWindow
             {
                 Owner = this
             };
             wdw.ShowDialog();
-            Core.Accounts.SaveData();
+            PropertyAccounts.Instance.SaveData();
         }
 
         private void buttonPropertyEdit_Click(object sender, RoutedEventArgs e)
         {
-            Core.Accounts = new PropertyAccounts();
+            //Core.Accounts = new PropertyAccounts();
             PropertyDetailsWindow wdw = new PropertyDetailsWindow
             {
                 Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                var ac = Core.Accounts;
-                ac.PropertyAddress = wdw.PropertyAddress;
-                ac.PropertyPurchaseCost = wdw.PropertyPurchaseCost;
-                ac.LandlordShares.Specification = wdw.PropertySharingSpecification;
-                ac.PropertyPurchaseDate = wdw.PropertyPurchaseDate;
-                ac.SaveData();
+                PropertyAccounts.Instance.PropertyAddress = wdw.PropertyAddress;
+                PropertyAccounts.Instance.PropertyPurchaseCost = wdw.PropertyPurchaseCost;
+                PropertyAccounts.Instance.LandlordShares.Specification = wdw.PropertySharingSpecification;
+                PropertyAccounts.Instance.PropertyPurchaseDate = wdw.PropertyPurchaseDate;
+                PropertyAccounts.Instance.SaveData();
             }
         }
 

@@ -42,7 +42,7 @@ public partial class AnnualSummaryWindow
     public AnnualSummaryWindow()
     {
         InitializeComponent();
-        TextblockAddress.Text = Core.Accounts.PropertyAddress;
+        TextblockAddress.Text =PropertyAccounts.Instance.PropertyAddress;
         LvwSummary.ItemsSource = _summaryLines;
         LvwIncome.ItemsSource = _incomeLines;
         LvwExpenditure.ItemsSource = _expenditureLines;
@@ -128,7 +128,7 @@ public partial class AnnualSummaryWindow
         CboYearType.Items.Add(it);
 
         CboYearType.SelectedIndex = 1;
-        TextblockAddress.Text = Core.Accounts.PropertyAddress;
+        TextblockAddress.Text =PropertyAccounts.Instance.PropertyAddress;
         DateConfirmationTextBlock.Text = string.Empty;
         OwnershipChangeAlertTextBlock.Visibility = Visibility.Hidden;
     }
@@ -209,7 +209,7 @@ public partial class AnnualSummaryWindow
         {
             First = periodstring.ToUpperInvariant()
         };
-        if (Core.Accounts.LandlordShares.SharingInYearStarting(YearBounds.Item1))
+        if (PropertyAccounts.Instance.LandlordShares.SharingInYearStarting(YearBounds.Item1))
         {
             SharedOwnershipTextBlock.Visibility = Visibility.Visible;
             it.Third = "JBH";
@@ -222,7 +222,7 @@ public partial class AnnualSummaryWindow
 
         _summaryLines.Add(it);
 
-        if (Core.Accounts.LandlordShares.HasChangeInPeriod(YearBounds.Item1, YearBounds.Item2))
+        if (PropertyAccounts.Instance.LandlordShares.HasChangeInPeriod(YearBounds.Item1, YearBounds.Item2))
         {
             OwnershipChangeAlertTextBlock.Visibility = Visibility.Visible;
             it = new Fourply() {First = "THERE WAS A CHANGE IN LANDLORD SHARES DURING THIS PERIOD"};
@@ -389,9 +389,9 @@ public partial class AnnualSummaryWindow
             _annualExpenditure[y] = 0;
         }
 
-        foreach (string ky in Core.Accounts.ExpenditureItems.Keys)
+        foreach (string ky in PropertyAccounts.Instance.ExpenditureItems.Keys)
         {
-            ExpenditureItem ei = Core.Accounts.ExpenditureItems[ky];
+            ExpenditureItem ei =PropertyAccounts.Instance.ExpenditureItems[ky];
             flag = false;
             switch (_selectedYearType)
             {
@@ -416,8 +416,8 @@ public partial class AnnualSummaryWindow
             if (flag)
             {
                 int etot = ei.AmountPence;
-                int exp1 = Core.Accounts.LandlordShares.FirstShare(etot, ei.PayDate);
-                int exp2 = Core.Accounts.LandlordShares.SecondShare(etot, ei.PayDate);
+                int exp1 =PropertyAccounts.Instance.LandlordShares.FirstShare(etot, ei.PayDate);
+                int exp2 =PropertyAccounts.Instance.LandlordShares.SecondShare(etot, ei.PayDate);
                 _annualExpenditureTotalAll += etot;
                 _annualExpenditureTotalL1 += exp1;
                 _annualExpenditureTotalL2 += exp2;
@@ -448,9 +448,9 @@ public partial class AnnualSummaryWindow
         _annualIncomeFurnishedL1 = 0;
         _annualIncomeFurnishedL2 = 0;
 
-        foreach (string ky in Core.Accounts.IncomeItems.Keys)
+        foreach (string ky in PropertyAccounts.Instance.IncomeItems.Keys)
         {
-            IncomeItem ii = Core.Accounts.IncomeItems[ky];
+            IncomeItem ii =PropertyAccounts.Instance.IncomeItems[ky];
             flag = ii.HitsYear(_selectedYear, _selectedYearType);
             if (flag)
             {
@@ -482,8 +482,8 @@ public partial class AnnualSummaryWindow
                     }
                 }
 
-                int inc1 = Core.Accounts.LandlordShares.FirstShare(countedAmount, ii.DateReceived);
-                int inc2 = Core.Accounts.LandlordShares.SecondShare(countedAmount, ii.DateReceived);
+                int inc1 = PropertyAccounts.Instance.LandlordShares.FirstShare(countedAmount, ii.DateReceived);
+                int inc2 = PropertyAccounts.Instance.LandlordShares.SecondShare(countedAmount, ii.DateReceived);
                 _annualIncomeAll += countedAmount;
                 _annualIncomeL1 += inc1;
                 _annualIncomeL2 += inc2;

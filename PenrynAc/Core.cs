@@ -151,7 +151,7 @@ public static class Core
 
     public static char JSeparator { get; set; } = char.Parse("^");
 
-    public static PropertyAccounts Accounts { get; set; } = new ();
+   // public static PropertyAccounts Accounts { get; set; } = new ();
 
 }
 

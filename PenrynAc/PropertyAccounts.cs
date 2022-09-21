@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace PenrynAc;
 
-public class PropertyAccounts
+public sealed class PropertyAccounts
 {
+    private static readonly PropertyAccounts Instantiation=new();
+    public static PropertyAccounts Instance => Instantiation;
     public string PropertyAddress { get; set; }
 
     public int PropertyPurchaseCost
@@ -20,10 +22,7 @@ public class PropertyAccounts
     // NOTE The key for exp and inc items will force sorting of items by date by being YYYYMMDDNNN where NNN ensures uniqueness
     // allows 999 each of inc and exp items per day. Changing the date of an item would require changing the key, and therefore
     // creating a new item to replace the old
-
-    
-
-    public PropertyAccounts()
+    private PropertyAccounts()
     {
         ExpenditureItems = new SortedDictionary<string, ExpenditureItem>();
         IncomeItems = new SortedDictionary<string, IncomeItem>();

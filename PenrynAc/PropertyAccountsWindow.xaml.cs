@@ -15,7 +15,7 @@ public partial class PropertyAccountsWindow
         public PropertyAccountsWindow()
         {
             InitializeComponent();
-            TextblockAddress.Text = Core.Accounts.PropertyAddress;
+            TextblockAddress.Text = PropertyAccounts.Instance.PropertyAddress;
             LvwSummary.ItemsSource = _summaryLines;
             LvwIncome.ItemsSource = _incomeLines;
             LvwExpenditure.ItemsSource = _expenditureLines;
@@ -111,7 +111,7 @@ public partial class PropertyAccountsWindow
             myline = new Fourply
             {
                 First = "Purchased",
-                Second = Core.Accounts.PropertyPurchaseDate.ToLongDateString(),
+                Second = PropertyAccounts.Instance.PropertyPurchaseDate.ToLongDateString(),
                 Third = "",
                 Fourth = ""
             };
@@ -120,9 +120,9 @@ public partial class PropertyAccountsWindow
             myline = new Fourply
             {
                 First = "Years since purchased",
-                Second = Core.Accounts.YearsRun.ToString("0.00", CultureInfo.CurrentCulture)
+                Second = PropertyAccounts.Instance.YearsRun.ToString("0.00", CultureInfo.CurrentCulture)
             };
-            if (Core.Accounts.LandlordShares.NumberOfPhases > 1)
+            if (PropertyAccounts.Instance.LandlordShares.NumberOfPhases > 1)
             {
                 myline.Third = "First share";
                 myline.Fourth = "Second share";
@@ -137,9 +137,9 @@ public partial class PropertyAccountsWindow
             {
                 First = "Purchase cost"
             };
-            var x = Core.Accounts.PropertyPurchaseCost;
-            var xf = Core.Accounts.LandlordShares.FirstShare(x, Core.Accounts.PropertyPurchaseDate);
-            var xs = Core.Accounts.LandlordShares.SecondShare(x, Core.Accounts.PropertyPurchaseDate);
+            var x = PropertyAccounts.Instance.PropertyPurchaseCost;
+            var xf = PropertyAccounts.Instance.LandlordShares.FirstShare(x, PropertyAccounts.Instance.PropertyPurchaseDate);
+            var xs = PropertyAccounts.Instance.LandlordShares.SecondShare(x, PropertyAccounts.Instance.PropertyPurchaseDate);
             myline.Second = Core.MoneyString(x);
             if (xs > 0)
             {
@@ -152,9 +152,9 @@ public partial class PropertyAccountsWindow
             {
                 First = "Setting up costs"
             };
-            x = Core.Accounts.AggregateCostSettingUp;
-            xf = Core.Accounts.LandlordShares.FirstShare(x, Core.Accounts.PropertyPurchaseDate);
-            xs = Core.Accounts.LandlordShares.SecondShare(x, Core.Accounts.PropertyPurchaseDate);
+            x = PropertyAccounts.Instance.AggregateCostSettingUp;
+            xf = PropertyAccounts.Instance.LandlordShares.FirstShare(x, PropertyAccounts.Instance.PropertyPurchaseDate);
+            xs = PropertyAccounts.Instance.LandlordShares.SecondShare(x, PropertyAccounts.Instance.PropertyPurchaseDate);
             myline.Second = Core.MoneyString(x);
             if (xs > 0)
             {
@@ -167,7 +167,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "Subsequent costs"
             };
-            x = Core.Accounts.AggregateCostSubsequent(out var l1, out var l2);
+            x = PropertyAccounts.Instance.AggregateCostSubsequent(out var l1, out var l2);
             myline.Second = Core.MoneyString(x);
             if (l2 > 0)
             {
@@ -180,7 +180,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "TOTAL COSTS"
             };
-            x = Core.Accounts.AggregateAllTimeCostTotal(out var a1, out var a2);
+            x = PropertyAccounts.Instance.AggregateAllTimeCostTotal(out var a1, out var a2);
             myline.Second = Core.MoneyString(x);
             if (a2 > 0)
             {
@@ -197,7 +197,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "TOTAL INCOME"
             };
-            x = Core.Accounts.AggregateAllTimeIncomeTotal(out var b1, out var b2);
+            x = PropertyAccounts.Instance.AggregateAllTimeIncomeTotal(out var b1, out var b2);
             myline.Second = Core.MoneyString(x);
             if (b2 > 0)
             {
@@ -210,7 +210,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "As percentage of total cost"
             };
-            var pc = (double)Core.Accounts.AggregateAllTimeIncomeTotal(out _, out _) / Core.Accounts.AggregateAllTimeCostTotal(out _ , out _);
+            var pc = (double)PropertyAccounts.Instance.AggregateAllTimeIncomeTotal(out _, out _) / PropertyAccounts.Instance.AggregateAllTimeCostTotal(out _ , out _);
             pc *= 100;
             myline.Second = pc.ToString("0.00", CultureInfo.CurrentCulture) + "%";
             _summaryLines.Add(myline);
@@ -219,7 +219,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "Average annual income"
             };
-            x = Core.Accounts.AverageAnnualIncome(out var r1, out var r2);
+            x = PropertyAccounts.Instance.AverageAnnualIncome(out var r1, out var r2);
             myline.Second = Core.MoneyString(x);
             if (r2 > 0)
             {
@@ -232,7 +232,7 @@ public partial class PropertyAccountsWindow
             {
                 First = "As percentage of total cost"
             };
-            pc = (double)Core.Accounts.AverageAnnualIncome(out _, out _) / Core.Accounts.AggregateAllTimeCostTotal(out _, out _);
+            pc = (double)PropertyAccounts.Instance.AverageAnnualIncome(out _, out _) / PropertyAccounts.Instance.AggregateAllTimeCostTotal(out _, out _);
             pc *= 100;
             myline.Second = pc.ToString("0.00", CultureInfo.CurrentCulture) + "%";
             _summaryLines.Add(myline);
@@ -242,9 +242,9 @@ public partial class PropertyAccountsWindow
         private void RefreshIncomeItems()
         {
             _incomeLines.Clear();
-            foreach (var k in Core.Accounts.IncomeItems.Keys)
+            foreach (var k in PropertyAccounts.Instance.IncomeItems.Keys)
             {
-                var i = Core.Accounts.IncomeItems[k];
+                var i = PropertyAccounts.Instance.IncomeItems[k];
                 if ((CheckBoxUnticked(DateLimitIncCheckBox)) || (i.CoversPeriodFromDate > _backTimeLimit))
                 {
                     IncomeLine l = new IncomeLine
@@ -254,8 +254,8 @@ public partial class PropertyAccountsWindow
                         CoversTo = i.CoversPeriodToDate.ToShortDateString(),
                         Days = i.DaysCovered.ToString( CultureInfo.CurrentCulture),
                         Description = i.Rubric,
-                        FirstShare = Core.MoneyString(Core.Accounts.LandlordShares.FirstShare(i.AmountPence, i.DateReceived)),
-                        SecondShare = Core.MoneyString(Core.Accounts.LandlordShares.SecondShare(i.AmountPence, i.DateReceived))
+                        FirstShare = Core.MoneyString(PropertyAccounts.Instance.LandlordShares.FirstShare(i.AmountPence, i.DateReceived)),
+                        SecondShare = Core.MoneyString(PropertyAccounts.Instance.LandlordShares.SecondShare(i.AmountPence, i.DateReceived))
                         ,
                         Furnished = i.Furnished ? "Yes" : "No"
                         ,
@@ -272,9 +272,9 @@ public partial class PropertyAccountsWindow
         {
             _expenditureLines.Clear();
 
-            foreach (string k in Core.Accounts.ExpenditureItems.Keys)
+            foreach (string k in PropertyAccounts.Instance.ExpenditureItems.Keys)
             {
-                var e = Core.Accounts.ExpenditureItems[k];
+                var e = PropertyAccounts.Instance.ExpenditureItems[k];
                 if ((CheckBoxUnticked(DateLimitExpCheckBox)) || (e.PayDate > _backTimeLimit))
                 {
                     ExpenditureLine l = new ExpenditureLine
@@ -285,8 +285,8 @@ public partial class PropertyAccountsWindow
                         Description = e.Rubric,
                         Sum = Core.MoneyString(e.AmountPence),
                         TaxYear = e.TaxYearString,
-                        FirstShare = Core.MoneyString(Core.Accounts.LandlordShares.FirstShare(e.AmountPence, e.PayDate)),
-                        SecondShare = Core.MoneyString(Core.Accounts.LandlordShares.SecondShare(e.AmountPence, e.PayDate))
+                        FirstShare = Core.MoneyString(PropertyAccounts.Instance.LandlordShares.FirstShare(e.AmountPence, e.PayDate)),
+                        SecondShare = Core.MoneyString(PropertyAccounts.Instance.LandlordShares.SecondShare(e.AmountPence, e.PayDate))
                     };
                     _expenditureLines.Add(l);
                 }
@@ -296,9 +296,9 @@ public partial class PropertyAccountsWindow
         private void RefreshCommonItems()
         {
             List<CommonLine> lst = new List<CommonLine>();
-            foreach (string k in Core.Accounts.ExpenditureItems.Keys)
+            foreach (string k in PropertyAccounts.Instance.ExpenditureItems.Keys)
             {
-                ExpenditureItem e = Core.Accounts.ExpenditureItems[k];
+                ExpenditureItem e = PropertyAccounts.Instance.ExpenditureItems[k];
                 if ((CheckBoxUnticked(DateLimitCommonCheckBox)) || (e.PayDate > _backTimeLimit))
                 {
                     CommonLine cl = new CommonLine()
@@ -312,9 +312,9 @@ public partial class PropertyAccountsWindow
                     lst.Add(cl);
                 }
             }
-            foreach (string k in Core.Accounts.IncomeItems.Keys)
+            foreach (string k in PropertyAccounts.Instance.IncomeItems.Keys)
             {
-                IncomeItem i = Core.Accounts.IncomeItems[k];
+                IncomeItem i = PropertyAccounts.Instance.IncomeItems[k];
                 if ((CheckBoxUnticked(DateLimitCommonCheckBox)) || (i.DateReceived > _backTimeLimit))
                 {
                     CommonLine cl = new CommonLine()
@@ -352,7 +352,7 @@ public partial class PropertyAccountsWindow
         {
             if (LvwIncome.SelectedIndex == -1) return; // no item selected
             IncomeLine il = (IncomeLine)LvwIncome.SelectedItem;
-            IncomeItem ii = Core.Accounts.IncomeItems[il.Key];
+            IncomeItem ii = PropertyAccounts.Instance.IncomeItems[il.Key];
             IncomeItemWindow wdw = new IncomeItemWindow(new IncomeItem(spec: ii.Specification))
             {
                 Owner = this
@@ -362,17 +362,17 @@ public partial class PropertyAccountsWindow
                 IncomeItem newIi = new IncomeItem(spec: wdw.IncomeItemSpec);
                 if (newIi.DateReceived == ii.DateReceived) // can edit existing item
                 {
-                    Core.Accounts.IncomeItems[il.Key].AmountPence = newIi.AmountPence;
-                    Core.Accounts.IncomeItems[il.Key].CoversPeriodFromDate = newIi.CoversPeriodFromDate;
-                    Core.Accounts.IncomeItems[il.Key].CoversPeriodToDate = newIi.CoversPeriodToDate;
-                    Core.Accounts.IncomeItems[il.Key].Furnished = newIi.Furnished;
-                    Core.Accounts.IncomeItems[il.Key].Rubric = newIi.Rubric;
+                    PropertyAccounts.Instance.IncomeItems[il.Key].AmountPence = newIi.AmountPence;
+                    PropertyAccounts.Instance.IncomeItems[il.Key].CoversPeriodFromDate = newIi.CoversPeriodFromDate;
+                    PropertyAccounts.Instance.IncomeItems[il.Key].CoversPeriodToDate = newIi.CoversPeriodToDate;
+                    PropertyAccounts.Instance.IncomeItems[il.Key].Furnished = newIi.Furnished;
+                    PropertyAccounts.Instance.IncomeItems[il.Key].Rubric = newIi.Rubric;
                 }
                 else
                 // must replace with new item as date had changed
                 {
-                    Core.Accounts.IncomeItems.Remove(il.Key);
-                    Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
+                    PropertyAccounts.Instance.IncomeItems.Remove(il.Key);
+                    PropertyAccounts.Instance.IncomeItems.Add(key: PropertyAccounts.Instance.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 }
                 RefreshIncomeItems();
                 RefreshCommonItems();
@@ -383,7 +383,7 @@ public partial class PropertyAccountsWindow
         {
             if (LvwExpenditure.SelectedIndex == -1) return; // no item selected
             ExpenditureLine el = (ExpenditureLine)LvwExpenditure.SelectedItem;
-            ExpenditureItem ei = Core.Accounts.ExpenditureItems[el.Key];
+            ExpenditureItem ei = PropertyAccounts.Instance.ExpenditureItems[el.Key];
             ExpenditureItemWindow wdw = new ExpenditureItemWindow(ei)
             {
                 Owner = this
@@ -393,16 +393,16 @@ public partial class PropertyAccountsWindow
                 ExpenditureItem newEi = new ExpenditureItem(spec: wdw.ExpenditureItemSpec);
                 if (newEi.PayDate == ei.PayDate) //  can edit existing item
                 {
-                    Core.Accounts.ExpenditureItems[el.Key].AllocatedTaxYear = newEi.AllocatedTaxYear;
-                    Core.Accounts.ExpenditureItems[el.Key].AmountPence = newEi.AmountPence;
-                    Core.Accounts.ExpenditureItems[el.Key].Category = newEi.Category;
-                    Core.Accounts.ExpenditureItems[el.Key].Rubric = newEi.Rubric;
+                    PropertyAccounts.Instance.ExpenditureItems[el.Key].AllocatedTaxYear = newEi.AllocatedTaxYear;
+                    PropertyAccounts.Instance.ExpenditureItems[el.Key].AmountPence = newEi.AmountPence;
+                    PropertyAccounts.Instance.ExpenditureItems[el.Key].Category = newEi.Category;
+                    PropertyAccounts.Instance.ExpenditureItems[el.Key].Rubric = newEi.Rubric;
                 }
                 else
                 // must replace with new item as date had changed
                 {
-                    Core.Accounts.ExpenditureItems.Remove(el.Key);
-                    Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
+                    PropertyAccounts.Instance.ExpenditureItems.Remove(el.Key);
+                    PropertyAccounts.Instance.ExpenditureItems.Add(key: PropertyAccounts.Instance.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 }
                 RefreshExpenditureItems();
                 RefreshCommonItems();
@@ -420,7 +420,7 @@ public partial class PropertyAccountsWindow
             if (wdw.ShowDialog() == true)
             {
                 IncomeItem newIi = new IncomeItem(spec: wdw.IncomeItemSpec);
-                Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
+                PropertyAccounts.Instance.IncomeItems.Add(key: PropertyAccounts.Instance.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 RefreshIncomeItems();
                 RefreshCommonItems();
             }
@@ -431,7 +431,7 @@ public partial class PropertyAccountsWindow
             if (LvwIncome.SelectedIndex == -1) return; // no item selected
             IncomeLine il = (IncomeLine)LvwIncome.SelectedItem;
             if (MessageBox.Show(il.Received + "\n" + il.Description + "\n\nDelete this item?", "Lettings", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
-            Core.Accounts.IncomeItems.Remove(il.Key);
+            PropertyAccounts.Instance.IncomeItems.Remove(il.Key);
             RefreshIncomeItems();
             RefreshCommonItems();
         }
@@ -447,7 +447,7 @@ public partial class PropertyAccountsWindow
             if (wdw.ShowDialog() == true)
             {
                 ExpenditureItem newEi = new ExpenditureItem(spec: wdw.ExpenditureItemSpec);
-                Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
+                PropertyAccounts.Instance.ExpenditureItems.Add(key: PropertyAccounts.Instance.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 RefreshExpenditureItems();
                 RefreshCommonItems();
             }
@@ -458,7 +458,7 @@ public partial class PropertyAccountsWindow
             if (LvwExpenditure.SelectedIndex == -1) return; // no item selected
             ExpenditureLine el = (ExpenditureLine)LvwExpenditure.SelectedItem;
             if (MessageBox.Show(el.Date + "\n" + el.Description + "\n\nDelete this item?", "Lettings", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
-            Core.Accounts.ExpenditureItems.Remove(el.Key);
+            PropertyAccounts.Instance.ExpenditureItems.Remove(el.Key);
             RefreshExpenditureItems();
             RefreshCommonItems();
         }

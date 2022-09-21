@@ -40,16 +40,16 @@ public partial class PropertyDetailsWindow : Window
 
             //txtProperty.Text = originalTitle = _Title = Core.Accounts.PropertyName;
 
-            TxtAddress.Text = originalAddress = _Address = Core.Accounts.PropertyAddress;
+            TxtAddress.Text = originalAddress = _Address = PropertyAccounts.Instance.PropertyAddress;
 
-            _shares.Specification = Core.Accounts.LandlordShares.Specification;
+            _shares.Specification = PropertyAccounts.Instance.LandlordShares.Specification;
             LblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
             originalSharingSchedule = _shares.Specification;
 
-            originalPurchaseCost = _PurchaseCost = Core.Accounts.PropertyPurchaseCost;
+            originalPurchaseCost = _PurchaseCost = PropertyAccounts.Instance.PropertyPurchaseCost;
             TxtPurchaseCost.Text = ((decimal)_PurchaseCost / 100).ToString(CultureInfo.CurrentCulture);
 
-            originalPurchaseDate = _PurchaseDate = Core.Accounts.PropertyPurchaseDate;
+            originalPurchaseDate = _PurchaseDate = PropertyAccounts.Instance.PropertyPurchaseDate;
             DtpPurchaseDate.SelectedDate = _PurchaseDate;
 
             BtnOk.IsEnabled = false;
