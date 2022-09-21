@@ -172,7 +172,7 @@ namespace PenrynAc
             };
             if (wdw.ShowDialog() == true)
             {
-                PropertyAccounts ac = Core.Accounts;
+                var ac = Core.Accounts;
                 ac.PropertyAddress = wdw.PropertyAddress;
                 ac.PropertyPurchaseCost = wdw.PropertyPurchaseCost;
                 ac.LandlordShares.Specification = wdw.PropertySharingSpecification;

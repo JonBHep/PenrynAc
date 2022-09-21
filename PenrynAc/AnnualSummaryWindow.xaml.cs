@@ -59,6 +59,18 @@ public partial class AnnualSummaryWindow
 
     private class IncomeLine
     {
+        public IncomeLine(IncomeItem item, int countedSum, int countedDays)
+        {
+            Received = item.DateReceived.ToShortDateString();
+            Sum = Core.MoneyString(item.AmountPence);
+            SumInYear =Core.MoneyString(countedSum);
+            Description =item.Rubric;
+            CoversFrom =item.CoversPeriodFromDate.ToShortDateString();
+            CoversTo =item.CoversPeriodToDate.ToShortDateString();
+            Days =item.DaysCovered.ToString();
+            DaysInYear =countedDays.ToString();
+            Furnished =item.Furnished ? "Yes":"No";
+        }
         public string Received { get; set; }
         public string Sum { get; set; }
         public string SumInYear { get; set; }
@@ -68,35 +80,43 @@ public partial class AnnualSummaryWindow
         public string Days { get; set; }
         public string DaysInYear { get; set; }
         public string Furnished { get; set; }
-        public string Key { get; set; }
     }
 
     private class ExpenditureLine
     {
+        public ExpenditureLine(ExpenditureItem item)
+        {
+            Date = item.PayDate.ToShortDateString();
+            Sum = Core.MoneyString(item.AmountPence);
+            TaxYear = item.TaxYearString;
+            Category=Core.ExpenditureCategoryCaption(item.Category);
+            Description = item.Rubric;
+            Allowable = Core.ExpenditureReducingTaxableProfit(item.Category) ? "Yes" : "No";
+        }
+        
         public string Date { get; set; }
         public string Sum { get; set; }
         public string TaxYear { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
         public string Allowable { get; set; }
-        public string Key { get; set; }
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        double scrX = System.Windows.SystemParameters.PrimaryScreenWidth;
-        double scrY = System.Windows.SystemParameters.PrimaryScreenHeight;
-        double winX = scrX * .98;
-        double winY = scrY * .94;
-        double Xm = (scrX - winX) / 2;
-        double Ym = (scrY - winY) / 4;
+        var scrX = SystemParameters.PrimaryScreenWidth;
+        var scrY = SystemParameters.PrimaryScreenHeight;
+        var winX = scrX * .98;
+        var winY = scrY * .94;
+        var xm = (scrX - winX) / 2;
+        var ym = (scrY - winY) / 4;
         Width = winX;
         Height = winY;
-        Left = Xm;
-        Top = Ym;
+        Left = xm;
+        Top = ym;
 
         CboYearType.Items.Clear();
-        ComboBoxItem it = new ComboBoxItem()
+        var it = new ComboBoxItem()
             {Tag = YearType.TaxYearAccrual, Content = "Tax year - traditional accounting"};
         CboYearType.Items.Add(it);
         it = new ComboBoxItem() {Tag = YearType.TaxYearCashBasis, Content = "Tax year - cash basis accounting"};
@@ -402,24 +422,13 @@ public partial class AnnualSummaryWindow
                 _annualExpenditureTotalL1 += exp1;
                 _annualExpenditureTotalL2 += exp2;
                 _annualExpenditure[(int) ei.Category] += etot;
-                ExpenditureLine lyne = new ExpenditureLine();
+                var lyne = new ExpenditureLine(ei);
                 if (Core.ExpenditureReducingTaxableProfit(ei.Category))
                 {
                     _annualExpenditureAllowableAll += etot;
                     _annualExpenditureAllowableL1 += exp1;
                     _annualExpenditureAllowableL2 += exp2;
-                    lyne.Allowable = "Yes";
                 }
-                else
-                {
-                    lyne.Allowable = "No";
-                }
-
-                lyne.Date = ei.PayDate.ToShortDateString();
-                lyne.TaxYear = ei.TaxYearString;
-                lyne.Sum = Core.MoneyString(etot);
-                lyne.Category = Core.ExpenditureCategoryCaption(ei.Category);
-                lyne.Description = ei.Rubric;
                 _expenditureLines.Add(lyne);
             }
         }
@@ -495,11 +504,8 @@ public partial class AnnualSummaryWindow
                     incDic.Add(ii.Rubric, countedAmount);
                 }
 
-                IncomeLine lyne = new IncomeLine
-                {
-                    Received = ii.DateReceived.ToShortDateString(), Sum = Core.MoneyString(ii.AmountPence)
-                    , SumInYear = Core.MoneyString(countedAmount), Description = ii.Rubric
-                };
+                var lyne = new IncomeLine(ii,countedAmount, countedDays);
+                
                 if (ii.Furnished)
                 {
                     lyne.Furnished = "Yes";

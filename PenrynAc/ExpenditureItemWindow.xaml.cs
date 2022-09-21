@@ -16,7 +16,6 @@ public partial class ExpenditureItemWindow
 
     private readonly RadioButton[] _radio = new RadioButton[5];
 
-    // public bool ParamNewItem { get; init; }
     private ExpenditureItem Z { get; set; }
     public string ExpenditureItemSpec => Z.Specification;
 

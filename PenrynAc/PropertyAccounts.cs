@@ -21,15 +21,7 @@ public class PropertyAccounts
     // allows 999 each of inc and exp items per day. Changing the date of an item would require changing the key, and therefore
     // creating a new item to replace the old
 
-    // public PropertyAccounts(string propAddress, string SharingSpec, DateTime propPurchaseDate, int propPurchaseCost)
-    // {
-    //     ExpenditureItems = new SortedDictionary<string, ExpenditureItem>();
-    //     IncomeItems = new SortedDictionary<string, IncomeItem>();
-    //     PropertyAddress = propAddress;
-    //     PropertyPurchaseCost = propPurchaseCost;
-    //     PropertyPurchaseDate = propPurchaseDate;
-    //     LandlordShares = new SharingSchedule() {Specification = SharingSpec};
-    // }
+    
 
     public PropertyAccounts()
     {

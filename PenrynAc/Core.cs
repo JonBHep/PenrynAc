@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace PenrynAc;
@@ -41,21 +40,15 @@ public static class Core
 
     public static string ExpenditureCategoryCaption(ExpenditureCategoryConstant ec)
     {
-        switch (ec)
+        return ec switch
         {
-            case ExpenditureCategoryConstant.AllowableAgentFees:
-                return "Agent fees";
-            case ExpenditureCategoryConstant.AllowableRatesInsurance:
-                return "Council tax, utilities, insurance";
-            case ExpenditureCategoryConstant.AllowableRepairsMaintenanceRenewals:
-                return "Repairs, maintenance, renewals";
-            case ExpenditureCategoryConstant.NonAllowableOther:
-                return "Other costs not to be claimed against tax";
-            case ExpenditureCategoryConstant.NonAllowableSettingUpCosts:
-                return "Setting-up costs not allowable against tax";
-            default:
-                return "Unknown";
-        }
+            ExpenditureCategoryConstant.AllowableAgentFees => "Agent fees"
+            , ExpenditureCategoryConstant.AllowableRatesInsurance => "Council tax, utilities, insurance"
+            , ExpenditureCategoryConstant.AllowableRepairsMaintenanceRenewals => "Repairs, maintenance, renewals"
+            , ExpenditureCategoryConstant.NonAllowableOther => "Other costs not to be claimed against tax"
+            , ExpenditureCategoryConstant.NonAllowableSettingUpCosts => "Setting-up costs not allowable against tax"
+            , _ => "Unknown"
+        };
     }
 
     public static bool ExpenditureReducingTaxableProfit(ExpenditureCategoryConstant ec)
@@ -151,23 +144,15 @@ public static class Core
         return true;
     }
 
-    public static string LastExpItemRubric { get; set; }
-    public static string LastIncItemRubric { get; set; }
+    public static string LastExpItemRubric { get; set; } = string.Empty;
+    public static string LastIncItemRubric { get; set; } = string.Empty;
     public static int LastIncItemAmount { get; set; }
     public static int LastExpItemAmount { get; set; }
 
-    public static Typeface FixedFont { get; set; } = new Typeface(
-        fontFamily: new FontFamily("Consolas, Lucida Console, Courier New"), style: System.Windows.FontStyles.Normal
-        , weight: System.Windows.FontWeights.Normal, stretch: System.Windows.FontStretches.Normal);
-
     public static char JSeparator { get; set; } = char.Parse("^");
 
-    public static Typeface FixedFontBold { get; set; } = new Typeface(
-        fontFamily: new FontFamily("Consolas, Lucida Console, Courier New"), style: System.Windows.FontStyles.Normal
-        , weight: System.Windows.FontWeights.Bold, stretch: System.Windows.FontStretches.Normal);
+    public static PropertyAccounts Accounts { get; set; } = new ();
 
-    public static PropertyAccounts Accounts { get; set; }
-    
 }
 
 
