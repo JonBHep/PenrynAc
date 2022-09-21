@@ -26,14 +26,14 @@ public class IncomeItem
         }
     }
 
-    public IncomeItem(string Spec) // overloaded class contructor
+    public IncomeItem(string spec) // overloaded class contructor
     {
-        if (Spec is null)
+        if (spec is null)
         {
-            throw new ArgumentNullException(paramName: Spec);
+            throw new ArgumentNullException(paramName: spec);
         }
 
-        string[] qi = Spec.Split(Core.JSeparator);
+        string[] qi = spec.Split(Core.JSeparator);
         DateReceived = Core.DateFromString(qi[0]);
         Rubric = qi[1];
         AmountPence = int.Parse(qi[2], CultureInfo.CurrentCulture);
@@ -68,22 +68,16 @@ public class IncomeItem
 
     public DateTime CoversPeriodFromDate
     {
-        get { return _coversPeriodFromDate; }
-        set
-        {
-            _coversPeriodFromDate = new DateTime(year: value.Year, month: value.Month, day: value.Day);
-            // not simply = value as we want to ensure time element is always midnight
-        }
+        get => _coversPeriodFromDate;
+        set => _coversPeriodFromDate = new DateTime(year: value.Year, month: value.Month, day: value.Day);
+        // not simply = value as we want to ensure time element is always midnight
     }
 
     public DateTime CoversPeriodToDate
     {
-        get { return _coversPeriodToDate; }
-        set
-        {
-            _coversPeriodToDate = new DateTime(year: value.Year, month: value.Month, day: value.Day);
-            // not simply = value as we want to ensure time element is always midnight
-        }
+        get => _coversPeriodToDate;
+        set => _coversPeriodToDate = new DateTime(year: value.Year, month: value.Month, day: value.Day);
+        // not simply = value as we want to ensure time element is always midnight
     }
 
     public int DaysCovered
@@ -98,45 +92,45 @@ public class IncomeItem
         }
     }
 
-    public bool HitsYear(int TargetYear, AnnualSummaryWindow.YearType TypeOfYear)
+    public bool HitsYear(int targetYear, AnnualSummaryWindow.YearType typeOfYear)
     {
-        bool RetVal = false;
-        switch (TypeOfYear)
+        bool retVal = false;
+        switch (typeOfYear)
         {
             case AnnualSummaryWindow.YearType.CalendarYearAccrual:
             {
-                DateTime yrStart = new DateTime(year: TargetYear, month: 1, day: 1);
-                DateTime yrEnd = new DateTime(year: TargetYear, month: 12, day: 31);
-                RetVal = (_coversPeriodFromDate < yrEnd) && (_coversPeriodToDate >= yrStart);
+                DateTime yrStart = new DateTime(year: targetYear, month: 1, day: 1);
+                DateTime yrEnd = new DateTime(year: targetYear, month: 12, day: 31);
+                retVal = (_coversPeriodFromDate < yrEnd) && (_coversPeriodToDate >= yrStart);
                 break;
             }
             case AnnualSummaryWindow.YearType.CalendarYearCash:
             {
-                DateTime yrStart = new DateTime(year: TargetYear, month: 1, day: 1);
-                DateTime yrEnd = new DateTime(year: TargetYear, month: 12, day: 31);
-                RetVal = (DateReceived <= yrEnd) && (DateReceived >= yrStart);
+                DateTime yrStart = new DateTime(year: targetYear, month: 1, day: 1);
+                DateTime yrEnd = new DateTime(year: targetYear, month: 12, day: 31);
+                retVal = (DateReceived <= yrEnd) && (DateReceived >= yrStart);
                 break;
             }
             case AnnualSummaryWindow.YearType.TaxYearAccrual:
             {
-                DateTime yrStart = Core.TaxYearStartDate(firstYear: TargetYear);
-                DateTime yrEnd = Core.TaxYearEndDate(firstYear: TargetYear);
-                RetVal = (_coversPeriodFromDate < yrEnd) && (_coversPeriodToDate >= yrStart);
+                DateTime yrStart = Core.TaxYearStartDate(firstYear: targetYear);
+                DateTime yrEnd = Core.TaxYearEndDate(firstYear: targetYear);
+                retVal = (_coversPeriodFromDate < yrEnd) && (_coversPeriodToDate >= yrStart);
                 break;
             }
             case AnnualSummaryWindow.YearType.TaxYearCashBasis:
             {
-                DateTime yrStart = Core.TaxYearStartDate(firstYear: TargetYear);
-                DateTime yrEnd = Core.TaxYearEndDate(firstYear: TargetYear);
-                RetVal = (DateReceived <= yrEnd) && (DateReceived >= yrStart);
+                DateTime yrStart = Core.TaxYearStartDate(firstYear: targetYear);
+                DateTime yrEnd = Core.TaxYearEndDate(firstYear: targetYear);
+                retVal = (DateReceived <= yrEnd) && (DateReceived >= yrStart);
                 break;
             }
         }
 
-        return RetVal;
+        return retVal;
     }
 
-    public DateTime StartDateInTaxYear(int taxYear)
+    private DateTime StartDateInTaxYear(int taxYear)
     {
         DateTime yrStart = Core.TaxYearStartDate(firstYear: taxYear);
         if (_coversPeriodFromDate < yrStart)
@@ -149,7 +143,7 @@ public class IncomeItem
         }
     }
 
-    public DateTime StartDateInCalendarYear(int calYear)
+    private DateTime StartDateInCalendarYear(int calYear)
     {
         DateTime yrStart = new DateTime(year: calYear, month: 1, day: 1);
         if (_coversPeriodFromDate < yrStart)
@@ -162,7 +156,7 @@ public class IncomeItem
         }
     }
 
-    public DateTime EndDateInTaxYear(int taxYear)
+    private DateTime EndDateInTaxYear(int taxYear)
     {
         DateTime yrEnd = Core.TaxYearEndDate(firstYear: taxYear);
         if (_coversPeriodToDate > yrEnd)
@@ -175,7 +169,7 @@ public class IncomeItem
         }
     }
 
-    public DateTime EndDateInCalendarYear(int calYear)
+    private DateTime EndDateInCalendarYear(int calYear)
     {
         DateTime yrEnd = new DateTime(year: calYear, month: 12, day: 31);
         if (_coversPeriodToDate > yrEnd)
@@ -211,8 +205,8 @@ public class IncomeItem
         if (HitsYear(tYear, AnnualSummaryWindow.YearType.TaxYearAccrual) == false) return 0;
         if (DaysCovered < 1) return AmountPence;
         int daysInYear = DaysCoveredInTaxYear(txYear: tYear);
-        double Proportion = (double) daysInYear / DaysCovered;
-        return Convert.ToInt32(AmountPence * Proportion);
+        double proportion = (double) daysInYear / DaysCovered;
+        return Convert.ToInt32(AmountPence * proportion);
     }
 
     public int AmountPenceInCalendarYear(int cYear)
@@ -220,7 +214,7 @@ public class IncomeItem
         if (HitsYear(cYear, AnnualSummaryWindow.YearType.CalendarYearAccrual) == false) return 0;
         if (DaysCovered < 1) return AmountPence;
         int daysInYear = DaysCoveredInCalendarYear(calYear: cYear);
-        double Proportion = (double) daysInYear / DaysCovered;
-        return Convert.ToInt32(AmountPence * Proportion);
+        double proportion = (double) daysInYear / DaysCovered;
+        return Convert.ToInt32(AmountPence * proportion);
     }
 }

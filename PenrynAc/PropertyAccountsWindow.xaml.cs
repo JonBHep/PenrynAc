@@ -355,13 +355,13 @@ public partial class PropertyAccountsWindow
             IncomeItem ii = Core.Accounts.IncomeItems[il.Key];
             IncomeItemWindow wdw = new IncomeItemWindow
             {
-                Ink = new IncomeItem(Spec: ii.Specification),
+                Ink = new IncomeItem(spec: ii.Specification),
                 Owner = this,
                 ParamNewItem = false
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem newIi = new IncomeItem(Spec: wdw.Ink.Specification);
+                IncomeItem newIi = new IncomeItem(spec: wdw.Ink.Specification);
                 if (newIi.DateReceived == ii.DateReceived) // can edit existing item
                 {
                     Core.Accounts.IncomeItems[il.Key].AmountPence = newIi.AmountPence;
@@ -388,13 +388,13 @@ public partial class PropertyAccountsWindow
             ExpenditureItem ei = Core.Accounts.ExpenditureItems[el.Key];
             ExpenditureItemWindow wdw = new ExpenditureItemWindow
             {
-                Z = new ExpenditureItem(Spec: ei.Specification),
+                Z = new ExpenditureItem(spec: ei.Specification),
                 ParamNewItem = false,
                 Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem newEi = new ExpenditureItem(Spec: wdw.Z.Specification);
+                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.Z.Specification);
                 if (newEi.PayDate == ei.PayDate) //  can edit existing item
                 {
                     Core.Accounts.ExpenditureItems[el.Key].AllocatedTaxYear = newEi.AllocatedTaxYear;
@@ -422,7 +422,7 @@ public partial class PropertyAccountsWindow
             };
             if (wdw.ShowDialog() == true)
             {
-                IncomeItem newIi = new IncomeItem(Spec: wdw.Ink.Specification);
+                IncomeItem newIi = new IncomeItem(spec: wdw.Ink.Specification);
                 Core.Accounts.IncomeItems.Add(key: Core.Accounts.UniqueIncomeKey(newIi.DateReceived), value: newIi);
                 RefreshIncomeItems();
                 RefreshCommonItems();
@@ -448,7 +448,7 @@ public partial class PropertyAccountsWindow
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem newEi = new ExpenditureItem(Spec: wdw.Z.Specification);
+                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.Z.Specification);
                 Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 RefreshExpenditureItems();
                 RefreshCommonItems();

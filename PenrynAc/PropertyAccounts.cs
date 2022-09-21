@@ -76,14 +76,14 @@ public class PropertyAccounts
                 }
                 case "Exp":
                 {
-                    var ei = new ExpenditureItem(Spec: lineContent);
+                    var ei = new ExpenditureItem(spec: lineContent);
                     newKey = UniqueExpenditureKey(ei.PayDate);
                     ExpenditureItems.Add(key: newKey, value: ei);
                     break;
                 }
                 case "Inc":
                 {
-                    var ii = new IncomeItem(Spec: lineContent);
+                    var ii = new IncomeItem(spec: lineContent);
                     newKey = UniqueIncomeKey(ii.DateReceived);
                     IncomeItems.Add(key: newKey, value: ii);
                     break;

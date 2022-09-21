@@ -6,91 +6,97 @@ using System.Windows.Media;
 
 namespace PenrynAc;
 
-public partial class DateEntryTextBox : UserControl
+public partial class DateEntryTextBox
 {
     private DateTime _value;
-        private bool _hasValue;
-        public event EventHandler ValueChanged;
+    private bool _hasValue;
+    public event EventHandler? ValueChanged;
 
-        public DateEntryTextBox()
+    public DateEntryTextBox()
+    {
+        InitializeComponent();
+        Clear();
+    }
+
+    private void TextboxDate_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string q = TextboxDate.Text.Trim();
+        if (String.IsNullOrWhiteSpace(q))
         {
-            InitializeComponent();
-            Clear();
+            TextboxDate.Opacity = 0.5;
+            _hasValue = false;
+            TextboxDate.ToolTip = "Null date";
+            TextblockResult.Text = "Null date";
         }
-
-        private void TextboxDate_TextChanged(object sender, TextChangedEventArgs e)
+        else
         {
-            string q = textboxDate.Text.Trim();
-            if (String.IsNullOrWhiteSpace(q))
+            TextboxDate.Opacity = 1;
+            if (DateTime.TryParse(q, out _value))
             {
-                textboxDate.Opacity = 0.5;
-                _hasValue = false;
-                textboxDate.ToolTip = "Null date";
-                textblockResult.Text = "Null date";
+                TextboxDate.Foreground = Brushes.Black;
+                _hasValue = true;
+
+                TextboxDate.ToolTip = _value.ToString("dd MMM yyyy", CultureInfo.CurrentCulture);
+                TextblockResult.Text = _value.ToString("dd MMM yyyy", CultureInfo.CurrentCulture);
             }
             else
             {
-                textboxDate.Opacity = 1;
-                if (DateTime.TryParse(q, out _value))
-                {
-                    textboxDate.Foreground = Brushes.Black;
-                    _hasValue = true;
-
-                    textboxDate.ToolTip = _value.ToString("dd MMM yyyy",CultureInfo.CurrentCulture);
-                    textblockResult.Text = _value.ToString("dd MMM yyyy", CultureInfo.CurrentCulture);
-                }
-                else
-                {
-                    textboxDate.Foreground = Brushes.Red;
-                    _hasValue = false;
-                    textboxDate.ToolTip = "Null date";
-                    textblockResult.Text = "Null date";
-                }
+                TextboxDate.Foreground = Brushes.Red;
+                _hasValue = false;
+                TextboxDate.ToolTip = "Null date";
+                TextblockResult.Text = "Null date";
             }
-            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public DateTime? DateValue
+        ValueChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public DateTime? DateValue
+    {
+        get
         {
-            get
+            if (_hasValue)
             {
-                if (_hasValue) { return _value; } else return null;
+                return _value;
             }
-            set
+
+            return null;
+        }
+        set
+        {
+            _value = value ?? DateTime.MinValue;
+            _hasValue = value.HasValue;
+            if (_value.Ticks < 1)
             {
-                _value = value.Value;
-                _hasValue = value.HasValue;
-		if (_value.Ticks < 1)
-                {
-                    textboxDate.Clear();
-                }
-                else
-                {
-                    textboxDate.Text = _value.ToShortDateString();
-                }
-
+                TextboxDate.Clear();
             }
-        }
+            else
+            {
+                TextboxDate.Text = _value.ToShortDateString();
+            }
 
-        public void Clear()
-        {
-            _value = new DateTime(1954, 1, 3);
-            _hasValue = false;
-            textboxDate.Clear();
         }
+    }
 
-        private void TextboxDate_GotFocus(object sender, RoutedEventArgs e)
-        {
-            gridBase.Background = Brushes.White;
-        }
+    private void Clear()
+    {
+        _value = new DateTime(1954, 1, 3);
+        _hasValue = false;
+        TextboxDate.Clear();
+    }
 
-        private void TextboxDate_LostFocus(object sender, RoutedEventArgs e)
-        {
-            gridBase.Background = Brushes.WhiteSmoke;
-        }
+    private void TextboxDate_GotFocus(object sender, RoutedEventArgs e)
+    {
+        GridBase.Background = Brushes.White;
+    }
 
-        private void UserControl_Initialized(object sender, EventArgs e)
-        {
-            textblockResult.Text = string.Empty;
-        }
+    private void TextboxDate_LostFocus(object sender, RoutedEventArgs e)
+    {
+        GridBase.Background = Brushes.WhiteSmoke;
+    }
+
+    private void UserControl_Initialized(object sender, EventArgs e)
+    {
+        TextblockResult.Text = string.Empty;
+    }
 }

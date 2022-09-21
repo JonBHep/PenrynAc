@@ -25,10 +25,8 @@ C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\o
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\ExpenditureItemWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\DateChooserWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\ExpenditureItemWindow.baml
-C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\DateEntryTextBox.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\IncomeItemWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
-C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\DateEntryTextBox.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\IncomeItemWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\PropertyAccountsWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Debug\net6.0-windows\PropertyDetailsWindow.g.cs

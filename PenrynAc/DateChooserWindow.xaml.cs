@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace PenrynAc;
 
-public partial class DateChooserWindow : Window
+public partial class DateChooserWindow
 {
    private readonly string _dateFormat = "dd MMMM yyyy, dddd";
         private int _selMonth ;
@@ -19,7 +19,7 @@ public partial class DateChooserWindow : Window
             InitializeComponent();
         }
 
-        public DateTime SelectedDate { get { return _selDate; } }
+        public DateTime SelectedDate => _selDate;
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -36,14 +36,14 @@ public partial class DateChooserWindow : Window
             Restart();
         }
 
-        public void Restart()
+        private void Restart()
         {
-            textblockToday.Text = "Today is " + DateTime.Today.ToString(_dateFormat, CultureInfo.CurrentCulture);
+            TextblockToday.Text = "Today is " + DateTime.Today.ToString(_dateFormat, CultureInfo.CurrentCulture);
             _selMonth = _selDay = 0;
 
             BuildDateSelectionList();
 
-            listboxPicker.Items.Clear();
+            ListboxPicker.Items.Clear();
             for (int d = 1; d < 32; d++)
             {
                 ListBoxItem it = new ListBoxItem()
@@ -57,17 +57,17 @@ public partial class DateChooserWindow : Window
                     Foreground = new SolidColorBrush(Colors.Blue)
                 };
                 it.Content = tb;
-                listboxPicker.Items.Add(it);
+                ListboxPicker.Items.Add(it);
             }
-            buttonReset.IsEnabled = false;
-            buttonSelect.IsEnabled = false;
+            ButtonReset.IsEnabled = false;
+            ButtonSelect.IsEnabled = false;
 
-            textblockSelectedDate.Text = string.Empty;
+            TextblockSelectedDate.Text = string.Empty;
         }
 
         private void BuildDateSelectionList()
         {
-            listboxDates.Items.Clear();
+            ListboxDates.Items.Clear();
             if (_selDay < 1)
             {
                 // Show the last 60 days
@@ -84,7 +84,7 @@ public partial class DateChooserWindow : Window
                     };
                     if (tb.Text.Contains("S")) { tb.Foreground = new SolidColorBrush(Colors.Blue); tb.FontWeight = FontWeights.Medium; } else { tb.Foreground = new SolidColorBrush(Colors.DarkBlue); tb.FontWeight = FontWeights.Normal; }
                     it.Content = tb;
-                    listboxDates.Items.Add(it);
+                    ListboxDates.Items.Add(it);
                 }
             }
             else if (_selMonth < 1)
@@ -110,7 +110,7 @@ public partial class DateChooserWindow : Window
                             };
                             if (tb.Text.Contains("S")) { tb.Foreground = new SolidColorBrush(Colors.Blue); tb.FontWeight = FontWeights.Medium; } else { tb.Foreground = new SolidColorBrush(Colors.DarkBlue); tb.FontWeight = FontWeights.Normal; }
                             it.Content = tb;
-                            listboxDates.Items.Add(it);
+                            ListboxDates.Items.Add(it);
                         }
                     }
                     xYr--;
@@ -137,7 +137,7 @@ public partial class DateChooserWindow : Window
                         };
                         if (tb.Text.Contains("S")) { tb.Foreground = new SolidColorBrush(Colors.Blue); tb.FontWeight = FontWeights.Medium; } else { tb.Foreground = new SolidColorBrush(Colors.DarkBlue); tb.FontWeight = FontWeights.Normal; }
                         it.Content = tb;
-                        listboxDates.Items.Add(it);
+                        ListboxDates.Items.Add(it);
                     }
                     xYr--;
                 }
@@ -148,17 +148,17 @@ public partial class DateChooserWindow : Window
         private void SetSelectedDate(DateTime sd)
         {
             _selDate = sd;
-            textblockSelectedDate.Text = _selDate.ToString(_dateFormat, CultureInfo.CurrentCulture);
-            buttonSelect.IsEnabled = true;
-            listboxPicker.Items.Clear();
-            listboxDates.Items.Clear();
-            buttonReset.IsEnabled = true;
+            TextblockSelectedDate.Text = _selDate.ToString(_dateFormat, CultureInfo.CurrentCulture);
+            ButtonSelect.IsEnabled = true;
+            ListboxPicker.Items.Clear();
+            ListboxDates.Items.Clear();
+            ButtonReset.IsEnabled = true;
         }
 
         private void ListboxDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listboxDates.SelectedItem == null) { return; }
-            ListBoxItem it = (ListBoxItem)listboxDates.SelectedItem;
+            if (ListboxDates.SelectedItem == null) { return; }
+            ListBoxItem it = (ListBoxItem)ListboxDates.SelectedItem;
             DateTime dt = (DateTime)it.Tag;
             SetSelectedDate(dt);
         }
@@ -173,14 +173,14 @@ public partial class DateChooserWindow : Window
 
         private void ListboxPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listboxPicker.SelectedItem == null) { return; }
+            if (ListboxPicker.SelectedItem == null) { return; }
             if (_selDay == 0) // select day and display months
             {
-                ListBoxItem it = (ListBoxItem)listboxPicker.SelectedItem;
+                ListBoxItem it = (ListBoxItem)ListboxPicker.SelectedItem;
                 int i = (int)it.Tag;
                 _selDay = i;
-                textblockSelectedDate.Text = _selDay.ToString(CultureInfo.CurrentCulture);
-                listboxPicker.Items.Clear();
+                TextblockSelectedDate.Text = _selDay.ToString(CultureInfo.CurrentCulture);
+                ListboxPicker.Items.Clear();
                 for (int m = 1; m < 13; m++)
                 {
                     if (_monthMaxDays[m] >= _selDay)
@@ -195,20 +195,20 @@ public partial class DateChooserWindow : Window
                             Foreground = new SolidColorBrush(Colors.Blue)
                         };
                         mit.Content = tb;
-                        listboxPicker.Items.Add(mit);
+                        ListboxPicker.Items.Add(mit);
                     }
                 }
-                buttonReset.IsEnabled = true;
+                ButtonReset.IsEnabled = true;
                 BuildDateSelectionList();
                 return;
             }
             if (_selMonth == 0) // select month and display years
             {
-                ListBoxItem it = (ListBoxItem)listboxPicker.SelectedItem;
+                ListBoxItem it = (ListBoxItem)ListboxPicker.SelectedItem;
                 int i = (int)it.Tag;
                 _selMonth = i;
-                textblockSelectedDate.Text = $"{_selDay} {MonthName(_selMonth)}";
-                listboxPicker.Items.Clear();
+                TextblockSelectedDate.Text = $"{_selDay} {MonthName(_selMonth)}";
+                ListboxPicker.Items.Clear();
                 for (int y = DateTime.Today.Year; y > 2011; y--)
                 {
                     if (IsOkDate(y, _selMonth, _selDay))
@@ -223,15 +223,15 @@ public partial class DateChooserWindow : Window
                             Foreground = new SolidColorBrush(Colors.Blue)
                         };
                         dit.Content = tb;
-                        listboxPicker.Items.Add(dit);
+                        ListboxPicker.Items.Add(dit);
                     }
                 }
-                buttonReset.IsEnabled = true;
+                ButtonReset.IsEnabled = true;
                 BuildDateSelectionList();
                 return;
             }
             // year selection
-            ListBoxItem itm = (ListBoxItem)listboxPicker.SelectedItem;
+            ListBoxItem itm = (ListBoxItem)ListboxPicker.SelectedItem;
             int yr = (int)itm.Tag;
             DateTime sdt = new DateTime(yr, _selMonth, _selDay);
             SetSelectedDate(sdt);
@@ -243,7 +243,7 @@ public partial class DateChooserWindow : Window
             string attempt = $"{d}/{m}/{y}";
             bool q = DateTime.TryParse(attempt, out DateTime result);
             if (!q) { return false; }
-            if (checkboxFuture.IsChecked.HasValue && checkboxFuture.IsChecked.Value)
+            if (CheckboxFuture.IsChecked.HasValue && CheckboxFuture.IsChecked.Value)
             {
                 return true;
             }
@@ -255,6 +255,6 @@ public partial class DateChooserWindow : Window
 
         private static string MonthName(int monthNumber)
         {
-            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month: monthNumber);
+            return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month: monthNumber);
         }
 }

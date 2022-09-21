@@ -9,4 +9,12 @@
         <NeutralLanguage>en-GB</NeutralLanguage>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Page Remove="DateEntryTextBox.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="DateEntryTextBox.xaml.cs" />
+    </ItemGroup>
+
 </Project>

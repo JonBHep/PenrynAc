@@ -15,9 +15,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock FontFamily="AR Julian" FontSize="16" Margin="12 4" Foreground="Gray">Select a date</TextBlock>
-        <TextBlock x:Name="textblockToday" Grid.Row="1" Margin="16 6" FontFamily="Lucida Console" FontSize="14" Foreground="DarkGreen">Today is ...</TextBlock>
+        <TextBlock x:Name="TextblockToday" Grid.Row="1" Margin="16 6" FontFamily="Lucida Console" FontSize="14" Foreground="DarkGreen">Today is ...</TextBlock>
         <DockPanel Grid.Row="2">
-            <ListBox x:Name="listboxPicker" Margin="2" Width="300" SelectionChanged="ListboxPicker_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListBox x:Name="ListboxPicker" Margin="2" Width="300" SelectionChanged="ListboxPicker_SelectionChanged" 
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <!--Disabled scrollbar so that items wrap within the box-->
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -26,14 +27,14 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <ListBox x:Name="listboxDates" Margin="2" SelectionChanged="ListboxDates_SelectionChanged"/>
+            <ListBox x:Name="ListboxDates" Margin="2" SelectionChanged="ListboxDates_SelectionChanged"/>
         </DockPanel>
-        <TextBlock x:Name="textblockSelectedDate" Grid.Row="3" Margin="16 6" FontFamily="Lucida Console" FontSize="14" Foreground="Blue">Selected date ...</TextBlock>
+        <TextBlock x:Name="TextblockSelectedDate" Grid.Row="3" Margin="16 6" FontFamily="Lucida Console" FontSize="14" Foreground="Blue">Selected date ...</TextBlock>
         <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <Button x:Name="buttonSelect" Margin="16 3 8 6" Padding="8 3" FontWeight="Medium" Width="80" Click="ButtonSelect_Click">Select</Button>
-            <Button x:Name="buttonReset" Margin="8 3 8 6" Padding="8 3" FontWeight="Normal" Width="80" Click="ButtonReset_Click">Reset</Button>
-            <Button x:Name="buttonCancel" Margin="8 3 8 6" Padding="8 3" FontWeight="Light" Width="80" Click="ButtonCancel_Click" IsCancel="True">Cancel</Button>
-            <CheckBox x:Name="checkboxFuture" VerticalAlignment="Center">Show future dates</CheckBox>
+            <Button x:Name="ButtonSelect" Margin="16 3 8 6" Padding="8 3" FontWeight="Medium" Width="80" Click="ButtonSelect_Click">Select</Button>
+            <Button x:Name="ButtonReset" Margin="8 3 8 6" Padding="8 3" FontWeight="Normal" Width="80" Click="ButtonReset_Click">Reset</Button>
+            <Button x:Name="ButtonCancel" Margin="8 3 8 6" Padding="8 3" FontWeight="Light" Width="80" Click="ButtonCancel_Click" IsCancel="True">Cancel</Button>
+            <CheckBox x:Name="CheckboxFuture" VerticalAlignment="Center">Show future dates</CheckBox>
         </StackPanel>
     </Grid>
 </Window>
