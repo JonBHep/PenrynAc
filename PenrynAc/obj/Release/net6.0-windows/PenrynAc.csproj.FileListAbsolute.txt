@@ -6,7 +6,6 @@ C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\b
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\PenrynAc.csproj.AssemblyReference.cache
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\AnnualSummaryWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\DateChooserWindow.g.cs
-C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\DateEntryTextBox.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\ExpenditureItemWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\IncomeItemWindow.g.cs
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\MainWindow.g.cs
@@ -20,7 +19,6 @@ C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\o
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\App.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\AnnualSummaryWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\DateChooserWindow.baml
-C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\DateEntryTextBox.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\ExpenditureItemWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\IncomeItemWindow.baml
 C:\Jbh.Original\Jbh.Info\Code\Jbh.Apps\CSharp-WPF-NET6\Utile\PenrynAc\PenrynAc\obj\Release\net6.0-windows\MainWindow.baml

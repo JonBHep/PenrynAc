@@ -8,15 +8,17 @@ namespace PenrynAc;
 
 public partial class ExpenditureItemWindow
 {
-    public ExpenditureItemWindow()
+    public ExpenditureItemWindow(ExpenditureItem item)
     {
         InitializeComponent();
+        Z = new ExpenditureItem(item.Specification);
     }
 
     private readonly RadioButton[] _radio = new RadioButton[5];
 
-    public bool ParamNewItem { get; init; }
-    public ExpenditureItem Z { get; set; }
+    // public bool ParamNewItem { get; init; }
+    private ExpenditureItem Z { get; set; }
+    public string ExpenditureItemSpec => Z.Specification;
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
@@ -37,11 +39,11 @@ public partial class ExpenditureItemWindow
             _radio[r].Content = Core.ExpenditureCategoryCaption((Core.ExpenditureCategoryConstant) _radio[r].Tag);
         }
 
-        if (ParamNewItem)
-        {
-            Z = new ExpenditureItem(taxPt: DateTime.Today, allocTaxYr: Core.TaxYearFromDate(DateTime.Today)
-                , description: string.Empty, penceValue: 0, categ: Core.ExpenditureCategoryConstant.Unknown);
-        }
+        // if (ParamNewItem)
+        // {
+        //     Z = new ExpenditureItem(taxPt: DateTime.Today, allocTaxYr: Core.TaxYearFromDate(DateTime.Today)
+        //         , description: string.Empty, penceValue: 0, categ: Core.ExpenditureCategoryConstant.Unknown);
+        // }
 
         PayDateTextBlock.Tag = Z.PayDate;
         PayDateTextBlock.Text = Z.PayDate.ToShortDateString();

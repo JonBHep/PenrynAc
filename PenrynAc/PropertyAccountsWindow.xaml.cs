@@ -384,15 +384,13 @@ public partial class PropertyAccountsWindow
             if (LvwExpenditure.SelectedIndex == -1) return; // no item selected
             ExpenditureLine el = (ExpenditureLine)LvwExpenditure.SelectedItem;
             ExpenditureItem ei = Core.Accounts.ExpenditureItems[el.Key];
-            ExpenditureItemWindow wdw = new ExpenditureItemWindow
+            ExpenditureItemWindow wdw = new ExpenditureItemWindow(ei)
             {
-                Z = new ExpenditureItem(spec: ei.Specification),
-                ParamNewItem = false,
                 Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.Z.Specification);
+                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.ExpenditureItemSpec);
                 if (newEi.PayDate == ei.PayDate) //  can edit existing item
                 {
                     Core.Accounts.ExpenditureItems[el.Key].AllocatedTaxYear = newEi.AllocatedTaxYear;
@@ -440,14 +438,15 @@ public partial class PropertyAccountsWindow
 
         private void ButtonAddExp_Click(object sender, RoutedEventArgs e)
         {
-            ExpenditureItemWindow wdw = new ExpenditureItemWindow
+            ExpenditureItem nova = new ExpenditureItem(taxPt: DateTime.Today, allocTaxYr: Core.TaxYearFromDate(DateTime.Today)
+                , description: string.Empty, penceValue: 0, categ: Core.ExpenditureCategoryConstant.Unknown);
+            ExpenditureItemWindow wdw = new ExpenditureItemWindow(nova)
             {
-                ParamNewItem = true,
                 Owner = this
             };
             if (wdw.ShowDialog() == true)
             {
-                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.Z.Specification);
+                ExpenditureItem newEi = new ExpenditureItem(spec: wdw.ExpenditureItemSpec);
                 Core.Accounts.ExpenditureItems.Add(key: Core.Accounts.UniqueExpenditureKey(newEi.PayDate), value: newEi);
                 RefreshExpenditureItems();
                 RefreshCommonItems();
