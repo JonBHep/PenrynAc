@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Jbh;
 
 namespace PenrynAc
@@ -19,7 +9,7 @@ namespace PenrynAc
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -39,8 +29,8 @@ namespace PenrynAc
         {
             var stephensonImage = System.IO.Path.Combine(AppManager.DataPath, "John Cecil Stephenson_03.jpg");
             var imageUri = new Uri(stephensonImage);
-            imageIllustration.Source = imageUri.GetBitmapImage(BitmapCacheOption.OnLoad);
-            imageIllustration.Stretch = Stretch.Uniform;
+            ImageIllustration.Source = imageUri.GetBitmapImage(BitmapCacheOption.OnLoad);
+            ImageIllustration.Stretch = Stretch.Uniform;
         }
 
         //private void CreatePropertyControls(int Top)
@@ -165,26 +155,25 @@ namespace PenrynAc
             //Button btn = (Button)sender;
             //string SelectedProperty = (string)btn.Tag;
             Core.Accounts = new PropertyAccounts();
-            PropertyAccountsWindow wdw = new PropertyAccountsWindow();
-            wdw.Owner = this;
+            PropertyAccountsWindow wdw = new PropertyAccountsWindow
+            {
+                Owner = this
+            };
             wdw.ShowDialog();
             Core.Accounts.SaveData();
         }
 
         private void buttonPropertyEdit_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            string SelectedProperty = (string)btn.Tag;
             Core.Accounts = new PropertyAccounts();
             PropertyDetailsWindow wdw = new PropertyDetailsWindow
             {
                 Owner = this
             };
-            if (wdw.ShowDialog() == (bool)true)
+            if (wdw.ShowDialog() == true)
             {
                 PropertyAccounts ac = Core.Accounts;
                 ac.PropertyAddress = wdw.PropertyAddress;
-                //ac.PropertyName = wdw.PropertyTitle;
                 ac.PropertyPurchaseCost = wdw.PropertyPurchaseCost;
                 ac.LandlordShares.Specification = wdw.PropertySharingSpecification;
                 ac.PropertyPurchaseDate = wdw.PropertyPurchaseDate;
@@ -194,8 +183,8 @@ namespace PenrynAc
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Jbh.AppManager.DataPath)) { MessageBox.Show("Path to data is not found.\n\nLettings will close.", "Databank is not accessible", MessageBoxButton.OK, MessageBoxImage.Error); Close(); }
-            textblockAppRev.Text = Core.AppRevDateString();
+            if (string.IsNullOrWhiteSpace(AppManager.DataPath)) { MessageBox.Show("Path to data is not found.\n\nLettings will close.", "Databank is not accessible", MessageBoxButton.OK, MessageBoxImage.Error); Close(); }
+            TextblockAppRev.Text = Core.AppRevDateString();
             //RefreshPropertyList();
         }
     }

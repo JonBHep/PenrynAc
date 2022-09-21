@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:PenrynAc"
         mc:Ignorable="d"
         Title="Property accounts" Height="600" Width="1000" WindowStyle="None"  AllowsTransparency="True" 
         Background="Transparent" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Loaded="Window_Loaded" ResizeMode="NoResize">
@@ -95,15 +94,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock x:Name="textblockTitle" Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
-                <TextBlock x:Name="textblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8">Property address</TextBlock>
+                <TextBlock Foreground="Black" FontWeight="Bold" Margin="8">PENRYN COTTAGE</TextBlock>
+                <TextBlock x:Name="TextblockAddress" Foreground="SaddleBrown"  FontWeight="Bold" Margin="8">Property address</TextBlock>
 
-                <Button x:Name="btnAnnualSummary" Width="120" Click="BtnAnnualSummary_Click">Annual summary</Button>
-                <Button x:Name="btnClose" Width="80" Click="BtnClose_Click" >Close</Button>
+                <Button Width="120" Click="BtnAnnualSummary_Click">Annual summary</Button>
+                <Button Width="80" Click="BtnClose_Click" >Close</Button>
             </StackPanel>
             <TabControl Grid.Row="1" >
                 <TabItem Header="Summary">
-                    <ListView Name="lvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
+                    <ListView Name="LvwSummary" Background="Ivory" Foreground="SaddleBrown" FontFamily="Consolas" FontSize="14">
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource HiddenColumnHeaderStyle}">
                                 <GridView.Columns>
@@ -119,12 +118,12 @@
                 <TabItem Header="Income">
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                            <Button x:Name="buttonAddInc" Width="70" Click="ButtonAddInc_Click">Add</Button>
-                            <Button x:Name="buttonEditInc" Width="70" Click="ButtonEditInc_Click">Edit</Button>
-                            <Button x:Name="buttonDeleteInc" Width="70" Click="ButtonDeleteInc_Click">Delete</Button>
+                            <Button x:Name="ButtonAddInc" Width="70" Click="ButtonAddInc_Click">Add</Button>
+                            <Button x:Name="ButtonEditInc" Width="70" Click="ButtonEditInc_Click">Edit</Button>
+                            <Button x:Name="ButtonDeleteInc" Width="70" Click="ButtonDeleteInc_Click">Delete</Button>
                             <CheckBox x:Name="DateLimitIncCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 0 0 0" Checked="DateLimitIncCheckBox_Checked" Unchecked="DateLimitIncCheckBox_Checked">List the last 2 years only</CheckBox>
                         </StackPanel>
-                        <ListView Name="lvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
+                        <ListView Name="LvwIncome" Background="MintCream" Foreground="DarkGreen" FontFamily="Consolas" FontSize="13">
                             <ListView.View>
                                 <GridView>
                                     <GridView.Columns>
@@ -146,12 +145,12 @@
                 <TabItem Header="Expenditure">
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                            <Button x:Name="buttonAddExp" Width="70" Click="ButtonAddExp_Click">Add</Button>
-                            <Button x:Name="buttonEditExp" Width="70" Click="ButtonEditExp_Click">Edit</Button>
-                            <Button x:Name="buttonDeleteExp" Width="70" Click="ButtonDeleteExp_Click">Delete</Button>
+                            <Button x:Name="ButtonAddExp" Width="70" Click="ButtonAddExp_Click">Add</Button>
+                            <Button x:Name="ButtonEditExp" Width="70" Click="ButtonEditExp_Click">Edit</Button>
+                            <Button x:Name="ButtonDeleteExp" Width="70" Click="ButtonDeleteExp_Click">Delete</Button>
                             <CheckBox x:Name="DateLimitExpCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 0 0 0" Checked="DateLimitExpCheckBox_Checked" Unchecked="DateLimitExpCheckBox_Checked">List the last 2 years only</CheckBox>
                         </StackPanel>
-                        <ListView Name="lvwExpenditure" Background="LavenderBlush" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
+                        <ListView Name="LvwExpenditure" Background="LavenderBlush" Foreground="DarkRed" FontFamily="Consolas" FontSize="13">
                             <ListView.View>
                                 <GridView>
                                     <GridView.Columns>
@@ -173,7 +172,7 @@
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                             <CheckBox x:Name="DateLimitCommonCheckBox" IsChecked="True" VerticalAlignment="Center" Margin="12 6 0 6" Checked="DateLimitCommonCheckBox_Checked" Unchecked="DateLimitCommonCheckBox_Checked">List the last 2 years only</CheckBox>
                         </StackPanel>
-                        <ListView Name="lvwCommon" Background="Ivory" Foreground="Black" FontFamily="Consolas" FontSize="13">
+                        <ListView Name="LvwCommon" Background="Ivory" Foreground="Black" FontFamily="Consolas" FontSize="13">
                             <ListView.View>
                                 <GridView>
                                     <GridView.Columns>

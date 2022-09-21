@@ -13,14 +13,14 @@ public partial class PropertyDetailsWindow : Window
             InitializeComponent();
             // Assign these events after InitializeComponent rather than in XAML so as to avoid events firing 
             // and triggering Null exceptions during InitializeComponent
-            txtProperty.TextChanged += TxtProperty_TextChanged;
-            txtAddress.TextChanged += TxtAddress_TextChanged;
-            txtPurchaseCost.TextChanged += TxtPurchaseCost_TextChanged;
-            dtpPurchaseDate.DisplayDateStart = new DateTime(year: 2000, month: 1, day: 1);
-            dtpPurchaseDate.DisplayDateEnd = DateTime.Today;
-            dtpPurchaseDate.SelectedDateChanged += DtpPurchaseDate_SelectedDateChanged;
-            btnOK.Click += BtnOK_Click;
-            btnCancel.Click += BtnCancel_Click;
+            TxtProperty.TextChanged += TxtProperty_TextChanged;
+            TxtAddress.TextChanged += TxtAddress_TextChanged;
+            TxtPurchaseCost.TextChanged += TxtPurchaseCost_TextChanged;
+            DtpPurchaseDate.DisplayDateStart = new DateTime(year: 2000, month: 1, day: 1);
+            DtpPurchaseDate.DisplayDateEnd = DateTime.Today;
+            DtpPurchaseDate.SelectedDateChanged += DtpPurchaseDate_SelectedDateChanged;
+            BtnOk.Click += BtnOK_Click;
+            BtnCancel.Click += BtnCancel_Click;
         }
 
         private string _Title;
@@ -36,23 +36,23 @@ public partial class PropertyDetailsWindow : Window
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            textblockErrorTitle.Visibility = Visibility.Hidden;
+            TextblockErrorTitle.Visibility = Visibility.Hidden;
 
             //txtProperty.Text = originalTitle = _Title = Core.Accounts.PropertyName;
 
-            txtAddress.Text = originalAddress = _Address = Core.Accounts.PropertyAddress;
+            TxtAddress.Text = originalAddress = _Address = Core.Accounts.PropertyAddress;
 
             _shares.Specification = Core.Accounts.LandlordShares.Specification;
-            lblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
+            LblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
             originalSharingSchedule = _shares.Specification;
 
             originalPurchaseCost = _PurchaseCost = Core.Accounts.PropertyPurchaseCost;
-            txtPurchaseCost.Text = ((decimal)_PurchaseCost / 100).ToString(CultureInfo.CurrentCulture);
+            TxtPurchaseCost.Text = ((decimal)_PurchaseCost / 100).ToString(CultureInfo.CurrentCulture);
 
             originalPurchaseDate = _PurchaseDate = Core.Accounts.PropertyPurchaseDate;
-            dtpPurchaseDate.SelectedDate = _PurchaseDate;
+            DtpPurchaseDate.SelectedDate = _PurchaseDate;
 
-            btnOK.IsEnabled = false;
+            BtnOk.IsEnabled = false;
 
         }
 
@@ -68,28 +68,28 @@ public partial class PropertyDetailsWindow : Window
 
         private void Enablement()
         {
-            btnOK.IsEnabled = !(((originalAddress == txtAddress.Text) || string.IsNullOrWhiteSpace(txtAddress.Text))
+            BtnOk.IsEnabled = !(((originalAddress == TxtAddress.Text) || string.IsNullOrWhiteSpace(TxtAddress.Text))
                 && (originalPurchaseCost == _PurchaseCost)
-                && (originalPurchaseDate == dtpPurchaseDate.SelectedDate) && (originalSharingSchedule == _shares.Specification));
+                && (originalPurchaseDate == DtpPurchaseDate.SelectedDate) && (originalSharingSchedule == _shares.Specification));
         }
 
         private void TxtAddress_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _Address = txtAddress.Text;
+            _Address = TxtAddress.Text;
             Enablement();
         }
 
         private void TxtProperty_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Core.IsValidFileName(txtProperty.Text))
+            if (!Core.IsValidFileName(TxtProperty.Text))
             {
-                textblockErrorTitle.Visibility = Visibility.Visible;
-                btnOK.IsEnabled = false;
+                TextblockErrorTitle.Visibility = Visibility.Visible;
+                BtnOk.IsEnabled = false;
             }
             else
             {
-                textblockErrorTitle.Visibility = Visibility.Hidden;
-                _Title = txtProperty.Text;
+                TextblockErrorTitle.Visibility = Visibility.Hidden;
+                _Title = TxtProperty.Text;
                 Enablement();
             }
         }
@@ -111,11 +111,11 @@ public partial class PropertyDetailsWindow : Window
 
         private void TxtPurchaseCost_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string qs = txtPurchaseCost.Text.Trim();
+            string qs = TxtPurchaseCost.Text.Trim();
             if (string.IsNullOrWhiteSpace(qs))
             {
-                lblPurchaseCostInterpret.Text = "Amount is missing";
-                lblPurchaseCostInterpret.Foreground = Brushes.Red;
+                LblPurchaseCostInterpret.Text = "Amount is missing";
+                LblPurchaseCostInterpret.Foreground = Brushes.Red;
                 _PurchaseCost = 0;
             }
             else
@@ -123,22 +123,22 @@ public partial class PropertyDetailsWindow : Window
                 // identical sub in income dialogue
                 if (decimal.TryParse(qs, out decimal sAmount))
                 {
-                    lblPurchaseCostInterpret.Text = sAmount.ToString("C", CultureInfo.CurrentCulture);
+                    LblPurchaseCostInterpret.Text = sAmount.ToString("C", CultureInfo.CurrentCulture);
                     if (sAmount <= 0)
                     {
-                        lblPurchaseCostInterpret.Foreground = Brushes.Red;
+                        LblPurchaseCostInterpret.Foreground = Brushes.Red;
                         _PurchaseCost = 0;
                     }
                     else
                     {
-                        lblPurchaseCostInterpret.Foreground = Brushes.Blue;
+                        LblPurchaseCostInterpret.Foreground = Brushes.Blue;
                         _PurchaseCost = (int)sAmount * 100;
                     }
                 }
                 else
                 {
-                    lblPurchaseCostInterpret.Text = "Amount is not a valid number";
-                    lblPurchaseCostInterpret.Foreground = Brushes.Red;
+                    LblPurchaseCostInterpret.Text = "Amount is not a valid number";
+                    LblPurchaseCostInterpret.Foreground = Brushes.Red;
                     _PurchaseCost = 0;
                 }
                 Enablement();
@@ -148,7 +148,7 @@ public partial class PropertyDetailsWindow : Window
 
         private void DtpPurchaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            _PurchaseDate = (DateTime)dtpPurchaseDate.SelectedDate;
+            _PurchaseDate = (DateTime)DtpPurchaseDate.SelectedDate;
             Enablement();
         }
 
@@ -160,7 +160,7 @@ public partial class PropertyDetailsWindow : Window
             if ((Q.HasValue) && (Q.Value))
             {
                 _shares.Specification = win.OutputScheduleSpecification;
-                lblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
+                LblSharing.Text = $"{_shares.NumberOfPhases} phase(s)";
                 Enablement();
             }
         }

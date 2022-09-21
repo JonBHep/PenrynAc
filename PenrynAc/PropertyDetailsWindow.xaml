@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:PenrynAc"
         mc:Ignorable="d"
         Title="Property details" Height="400" Width="600" Loaded="Window_Loaded" 
         WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
@@ -22,21 +21,21 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" TextWrapping="Wrap" Text="Property title" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="2" TextWrapping="Wrap" Text="Property address" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="3" TextWrapping="Wrap" Text="Landlords' shares" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="4" TextWrapping="Wrap" Text="Purchase cost" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="5" TextWrapping="Wrap" Text="Purchase date" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtProperty" Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="4" TextWrapping="Wrap" Text="PENRYN COTTAGE" IsReadOnly="True" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtAddress" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="23" Margin="4" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Property address" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Landlords' shares" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Purchase cost" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="4" Padding="2" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Text="Purchase date" VerticalAlignment="Center"/>
+        <TextBox x:Name="TxtProperty" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="4" TextWrapping="Wrap" Text="PENRYN COTTAGE" IsReadOnly="True" VerticalAlignment="Center"/>
+        <TextBox x:Name="TxtAddress" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="23" Margin="4" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Margin="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="4">
-            <TextBox x:Name="txtPurchaseCost" HorizontalAlignment="Left" Height="23" Padding="2" Width="120" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
-            <TextBlock x:Name="lblPurchaseCostInterpret" Margin="8 0 0 0" VerticalAlignment="Center" >£0.00</TextBlock>
+            <TextBox x:Name="TxtPurchaseCost" HorizontalAlignment="Left" Height="23" Padding="2" Width="120" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
+            <TextBlock x:Name="LblPurchaseCostInterpret" Margin="8 0 0 0" VerticalAlignment="Center" >£0.00</TextBlock>
         </StackPanel>
-        <TextBlock x:Name="textblockErrorTitle" Grid.Column="1" HorizontalAlignment="Stretch" Margin="8" Padding="2" Grid.Row="1" TextWrapping="Wrap" Text="Title is empty or contains invalid characters" VerticalAlignment="Stretch" Foreground="Red"/>
-        <TextBlock x:Name="lblSharing" Grid.Column="2" HorizontalAlignment="Left" Padding="2" Margin="8" Grid.Row="3" TextWrapping="Wrap" Text="???" VerticalAlignment="Center"/>
+        <TextBlock x:Name="TextblockErrorTitle" Grid.Column="1" HorizontalAlignment="Stretch" Margin="8" Padding="2" Grid.Row="1" TextWrapping="Wrap" Text="Title is empty or contains invalid characters" VerticalAlignment="Stretch" Foreground="Red"/>
+        <TextBlock x:Name="LblSharing" Grid.Column="2" HorizontalAlignment="Left" Padding="2" Margin="8" Grid.Row="3" TextWrapping="Wrap" Text="???" VerticalAlignment="Center"/>
         <Button x:Name="SharingButton" Grid.Column="1" Grid.Row="3" Margin="8 12" Padding="4" Click="SharingButton_Click" >Define sharing</Button>
-        <Button x:Name="btnOK" Grid.Column="2" Margin="8,0,8,0" Padding="4" Grid.Row="0" Height="27" Width="80" VerticalAlignment="Center" HorizontalAlignment="Right">OK</Button>
-        <Button x:Name="btnCancel" Grid.Column="2" Margin="8,0,8,0" Padding="4" Grid.Row="1" Height="27" Width="80" VerticalAlignment="Center" HorizontalAlignment="Right">Cancel</Button>
-        <DatePicker x:Name="dtpPurchaseDate" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Width="200" SelectedDateFormat="Long" FirstDayOfWeek="Monday" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button x:Name="BtnOk" Grid.Column="2" Margin="8,0,8,0" Padding="4" Grid.Row="0" Height="27" Width="80" VerticalAlignment="Center" HorizontalAlignment="Right">OK</Button>
+        <Button x:Name="BtnCancel" Grid.Column="2" Margin="8,0,8,0" Padding="4" Grid.Row="1" Height="27" Width="80" VerticalAlignment="Center" HorizontalAlignment="Right">Cancel</Button>
+        <DatePicker x:Name="DtpPurchaseDate" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Width="200" SelectedDateFormat="Long" FirstDayOfWeek="Monday" HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Grid>
 </Window>

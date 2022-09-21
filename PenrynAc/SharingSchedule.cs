@@ -27,10 +27,10 @@ public class SharingSchedule
     {
         get
         {
-            string answ = string.Empty;
-            foreach (Tuple<DateTime, double> tup in Schedule)
+            var answ = string.Empty;
+            foreach (var tup in Schedule)
             {
-                string sub = $"{tup.Item1.ToString("yyyyMMdd", CultureInfo.CurrentCulture)}{tup.Item2}";
+                var sub = $"{tup.Item1.ToString("yyyyMMdd", CultureInfo.CurrentCulture)}{tup.Item2}";
                 answ += _mainSeparator + sub;
             }
 
@@ -48,21 +48,21 @@ public class SharingSchedule
                 throw new ArgumentNullException(paramName: value);
             }
 
-            char[] seps = _mainSeparator.ToCharArray();
-            string[] bits = value.Split(seps);
+            var seps = _mainSeparator.ToCharArray();
+            var bits = value.Split(seps);
             Schedule.Clear();
-            foreach (string s in bits)
+            foreach (var s in bits)
             {
-                string ystring = s.Substring(0, 4);
-                string mstring = s.Substring(4, 2);
-                string dstring = s.Substring(6, 2);
-                string propstring = s.Substring(8);
-                int yr = int.Parse(ystring, CultureInfo.CurrentCulture);
-                int mh = int.Parse(mstring, CultureInfo.CurrentCulture);
-                int dy = int.Parse(dstring, CultureInfo.CurrentCulture);
-                double prop = double.Parse(propstring, CultureInfo.CurrentCulture);
-                DateTime dt = new DateTime(yr, mh, dy);
-                Tuple<DateTime, double> phase = new Tuple<DateTime, double>(dt, prop);
+                var ystring = s.Substring(0, 4);
+                var mstring = s.Substring(4, 2);
+                var dstring = s.Substring(6, 2);
+                var propstring = s.Substring(8);
+                var yr = int.Parse(ystring, CultureInfo.CurrentCulture);
+                var mh = int.Parse(mstring, CultureInfo.CurrentCulture);
+                var dy = int.Parse(dstring, CultureInfo.CurrentCulture);
+                var prop = double.Parse(propstring, CultureInfo.CurrentCulture);
+                var dt = new DateTime(yr, mh, dy);
+                var phase = new Tuple<DateTime, double>(dt, prop);
                 Schedule.Add(phase);
             }
         }
@@ -72,7 +72,7 @@ public class SharingSchedule
     {
         double retval = 1;
         Schedule.Sort();
-        foreach (Tuple<DateTime, double> tup in Schedule)
+        foreach (var tup in Schedule)
         {
             if (tup.Item1 <= when)
             {
@@ -85,37 +85,30 @@ public class SharingSchedule
 
     public int FirstShare(int wholeAmount, DateTime payDate)
     {
-        double prop = FirstShareApplicableOnDate(payDate);
-        double retval = wholeAmount * prop;
+        var prop = FirstShareApplicableOnDate(payDate);
+        var retval = wholeAmount * prop;
         return (int) Math.Round(retval);
     }
 
     public int SecondShare(int wholeAmount, DateTime payDate)
     {
-        double prop = FirstShareApplicableOnDate(payDate);
+        var prop = FirstShareApplicableOnDate(payDate);
         prop = 1 - prop;
-        double retval = wholeAmount * prop;
+        var retval = wholeAmount * prop;
         return (int) Math.Round(retval);
     }
 
-    public int NumberOfPhases
-    {
-        get { return Schedule.Count; }
-    }
+    public int NumberOfPhases => Schedule.Count;
 
     public bool HasChangeInPeriod(DateTime startDate, DateTime endDate)
     {
-        bool change = false;
-        foreach (Tuple<DateTime, double> tup in Schedule)
+        var change = false;
+        foreach (var tup in Schedule)
         {
-            DateTime Q = tup.Item1;
-            bool intime = true;
-            if (Q < startDate)
-            {
-                intime = false;
-            }
+            var q = tup.Item1;
+            var intime = !(q < startDate);
 
-            if (Q > endDate)
+            if (q > endDate)
             {
                 intime = false;
             }

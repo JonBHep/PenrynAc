@@ -15,11 +15,11 @@ public partial class PropertyAccountsWindow
         public PropertyAccountsWindow()
         {
             InitializeComponent();
-            textblockAddress.Text = Core.Accounts.PropertyAddress;
-            lvwSummary.ItemsSource = _summaryLines;
-            lvwIncome.ItemsSource = _incomeLines;
-            lvwExpenditure.ItemsSource = _expenditureLines;
-            lvwCommon.ItemsSource = _commonLines;
+            TextblockAddress.Text = Core.Accounts.PropertyAddress;
+            LvwSummary.ItemsSource = _summaryLines;
+            LvwIncome.ItemsSource = _incomeLines;
+            LvwExpenditure.ItemsSource = _expenditureLines;
+            LvwCommon.ItemsSource = _commonLines;
             RefreshSummary();
             //RefreshIncomeItems(); // These two Refreshes are triggered by CheckBox.IsChecked setting on their respective tabs, so don't need to be triggered here
             //RefreshExpenditureItems();
@@ -350,8 +350,8 @@ public partial class PropertyAccountsWindow
 
         private void ButtonEditInc_Click(object sender, RoutedEventArgs e)
         {
-            if (lvwIncome.SelectedIndex == -1) return; // no item selected
-            IncomeLine il = (IncomeLine)lvwIncome.SelectedItem;
+            if (LvwIncome.SelectedIndex == -1) return; // no item selected
+            IncomeLine il = (IncomeLine)LvwIncome.SelectedItem;
             IncomeItem ii = Core.Accounts.IncomeItems[il.Key];
             IncomeItemWindow wdw = new IncomeItemWindow(new IncomeItem(spec: ii.Specification))
             {
@@ -381,8 +381,8 @@ public partial class PropertyAccountsWindow
 
         private void ButtonEditExp_Click(object sender, RoutedEventArgs e)
         {
-            if (lvwExpenditure.SelectedIndex == -1) return; // no item selected
-            ExpenditureLine el = (ExpenditureLine)lvwExpenditure.SelectedItem;
+            if (LvwExpenditure.SelectedIndex == -1) return; // no item selected
+            ExpenditureLine el = (ExpenditureLine)LvwExpenditure.SelectedItem;
             ExpenditureItem ei = Core.Accounts.ExpenditureItems[el.Key];
             ExpenditureItemWindow wdw = new ExpenditureItemWindow
             {
@@ -430,8 +430,8 @@ public partial class PropertyAccountsWindow
 
         private void ButtonDeleteInc_Click(object sender, RoutedEventArgs e)
         {
-            if (lvwIncome.SelectedIndex == -1) return; // no item selected
-            IncomeLine il = (IncomeLine)lvwIncome.SelectedItem;
+            if (LvwIncome.SelectedIndex == -1) return; // no item selected
+            IncomeLine il = (IncomeLine)LvwIncome.SelectedItem;
             if (MessageBox.Show(il.Received + "\n" + il.Description + "\n\nDelete this item?", "Lettings", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
             Core.Accounts.IncomeItems.Remove(il.Key);
             RefreshIncomeItems();
@@ -456,8 +456,8 @@ public partial class PropertyAccountsWindow
 
         private void ButtonDeleteExp_Click(object sender, RoutedEventArgs e)
         {
-            if (lvwExpenditure.SelectedIndex == -1) return; // no item selected
-            ExpenditureLine el = (ExpenditureLine)lvwExpenditure.SelectedItem;
+            if (LvwExpenditure.SelectedIndex == -1) return; // no item selected
+            ExpenditureLine el = (ExpenditureLine)LvwExpenditure.SelectedItem;
             if (MessageBox.Show(el.Date + "\n" + el.Description + "\n\nDelete this item?", "Lettings", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
             Core.Accounts.ExpenditureItems.Remove(el.Key);
             RefreshExpenditureItems();

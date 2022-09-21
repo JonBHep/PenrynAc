@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace PenrynAc;
 
-public partial class PropertySharesWindow : Window
+public partial class PropertySharesWindow
 {
     public PropertySharesWindow(string propertyTitle)
         {
@@ -15,10 +15,10 @@ public partial class PropertySharesWindow : Window
         }
 
         private readonly SharingSchedule _localSchedule = new SharingSchedule();
-        private readonly string _propertyName = string.Empty;
+        private readonly string _propertyName;
         private double _firstProportion = 1;
 
-        public string OutputScheduleSpecification { get { return _localSchedule.Specification; } }
+        public string OutputScheduleSpecification => _localSchedule.Specification;
 
         public void SetSchedule(string spec)
         {
@@ -28,7 +28,7 @@ public partial class PropertySharesWindow : Window
 
         private void DisplaySchedule()
         {
-            tbkProperty.Text = _propertyName;
+            TbkProperty.Text = _propertyName;
             StartDateDatePicker.SelectedDate = DateTime.Today;
             NumeratorTextBox.Text = "";
             DenominatorTextBox.Text = "";
